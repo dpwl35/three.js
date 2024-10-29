@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import vertexShader from '../shaders/vertex.glsl?raw';
+import fragmentShader from '../shaders/fragment.glsl?raw';
 
 export default function () {
   const renderer = new THREE.WebGLRenderer({
@@ -31,8 +33,18 @@ export default function () {
   controls.dampingFactor = 0.1;
 
   const createObject = () => {
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const geometry = new THREE.PlaneGeometry(1, 1);
+    const material = new THREE.RawShaderMaterial({
+      wireframe: false,
+      side: THREE.DoubleSide,
+      color: 0x00ff00,
+      vertexShader: vertexShader,
+      // onBeforeCompile: (data) => {
+      //   console.log(data);
+      //   /* shader 사용하고 있음 */
+      // },
+      fragmentShader: fragmentShader,
+    });
+    const geometry = new THREE.PlaneGeometry(1, 1, 2, 2);
     const mesh = new THREE.Mesh(geometry, material);
 
     scene.add(mesh);
