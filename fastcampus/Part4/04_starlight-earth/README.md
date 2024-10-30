@@ -1,3 +1,5 @@
+##04-starlight-earth
+
 RawShaderMaterial : 사용자가 직접 작성한 셰이더 코드 / Three.js가 자동으로 삽입하는 셰이더 코드 생략
 
 gl_Position : **클립 공간(clip space)**
