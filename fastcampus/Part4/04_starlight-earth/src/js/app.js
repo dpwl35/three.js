@@ -10,6 +10,8 @@ export default function () {
 
   renderer.setClearColor(0x333333, 1);
 
+  const clock = new THREE.Clock();
+
   const container = document.querySelector('#container');
 
   container.appendChild(renderer.domElement);
@@ -34,20 +36,42 @@ export default function () {
 
   const createObject = () => {
     const material = new THREE.RawShaderMaterial({
-      wireframe: false,
-      side: THREE.DoubleSide,
-      color: 0x00ff00,
+      //wireframe: false,
+      //color: 0x00ff00,
+      uniforms: {
+        uTime: { value: 0 },
+      },
       vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      side: THREE.DoubleSide,
       // onBeforeCompile: (data) => {
       //   console.log(data);
       //   /* shader 사용하고 있음 */
       // },
-      fragmentShader: fragmentShader,
     });
-    const geometry = new THREE.PlaneGeometry(1, 1, 2, 2);
+    const geometry = new THREE.PlaneGeometry(1, 1, 16, 16);
+
+    const verticescount = geometry.attributes.position.count;
+    const randomPositions = new Float32Array(verticescount);
+
+    for (let i = 0; i < verticescount; i++) {
+      // -1.0 ~ 1.0 사이의 랜덤 값 생성
+      randomPositions[i] = (Math.random() - 0.5) * 2;
+    }
+
+    // 랜덤 값을 새로운 BufferAttribute로 설정
+    geometry.setAttribute(
+      'aRandomPosition',
+      new THREE.BufferAttribute(randomPositions, 1)
+    );
+
     const mesh = new THREE.Mesh(geometry, material);
+    console.log(mesh.position);
+    //mesh.position.y = 1;
 
     scene.add(mesh);
+
+    return mesh;
   };
 
   const resize = () => {
@@ -65,19 +89,22 @@ export default function () {
     window.addEventListener('resize', resize);
   };
 
-  const draw = () => {
+  const draw = (mesh) => {
     controls.update();
     renderer.render(scene, camera);
+
+    mesh.material.uniforms.uTime.value = clock.getElapsedTime();
+
     requestAnimationFrame(() => {
-      draw();
+      draw(mesh);
     });
   };
 
   const initialize = () => {
-    createObject();
+    const mesh = createObject();
     addEvent();
     resize();
-    draw();
+    draw(mesh);
   };
 
   initialize();
