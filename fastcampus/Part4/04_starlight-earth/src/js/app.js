@@ -11,6 +11,7 @@ export default function () {
   renderer.setClearColor(0x333333, 1);
 
   const clock = new THREE.Clock();
+  const textureLoader = new THREE.TextureLoader();
 
   const container = document.querySelector('#container');
 
@@ -35,11 +36,12 @@ export default function () {
   controls.dampingFactor = 0.1;
 
   const createObject = () => {
-    const material = new THREE.RawShaderMaterial({
+    const material = new THREE.ShaderMaterial({
       //wireframe: false,
       //color: 0x00ff00,
       uniforms: {
         uTime: { value: 0 },
+        uTexture: { value: textureLoader.load('assets/new-beginnings.jpg') },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
@@ -49,7 +51,7 @@ export default function () {
       //   /* shader 사용하고 있음 */
       // },
     });
-    const geometry = new THREE.PlaneGeometry(1, 1, 16, 16);
+    const geometry = new THREE.PlaneGeometry(1, 965 / 720, 16, 16);
 
     const verticescount = geometry.attributes.position.count;
     const randomPositions = new Float32Array(verticescount);

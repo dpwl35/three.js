@@ -55,3 +55,19 @@ varying float vRandomPosition;
 vRandomPosition = aRandomPosition
 
 three.js에서 시간을 다룰 때는Clock 사용
+
+```javascript
+modelPosition.z += (aRandomPosition / 20.0) * sin(uTime);
+```
+
+시간에 따라 진동하는 값으로
+uTime이 증가하면서 sin(uTime)은 0에서 시작해 1, 다시 0, -1, 그리고 다시 0으로 변하는 주기를 가짐
+
+RawShaderMaterial > ShaderMaterial 바꾸기
+vertex / uniform mat4 projectionMatrix;
+vertex / uniform mat4 viewMatrix;
+vertex / uniform mat4 modelMatrix;
+vertex / attribute vec3 position; // 정점 위치
+vertex / attribute vec2 uv;
+fragment / precision mediump float;
+이렇게 정의했던 값 지우면 됨 이미 내장되어 있음
