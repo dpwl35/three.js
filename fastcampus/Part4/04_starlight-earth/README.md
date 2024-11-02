@@ -63,11 +63,27 @@ modelPosition.z += (aRandomPosition / 20.0) * sin(uTime);
 시간에 따라 진동하는 값으로
 uTime이 증가하면서 sin(uTime)은 0에서 시작해 1, 다시 0, -1, 그리고 다시 0으로 변하는 주기를 가짐
 
-RawShaderMaterial > ShaderMaterial 바꾸기
-vertex / uniform mat4 projectionMatrix;
-vertex / uniform mat4 viewMatrix;
-vertex / uniform mat4 modelMatrix;
-vertex / attribute vec3 position; // 정점 위치
-vertex / attribute vec2 uv;
-fragment / precision mediump float;
+RawShaderMaterial > ShaderMaterial 바꾸기  
+vertex / uniform mat4 projectionMatrix;  
+vertex / uniform mat4 viewMatrix;  
+vertex / uniform mat4 modelMatrix;  
+vertex / attribute vec3 position; // 정점 위치  
+vertex / attribute vec2 uv;  
+fragment / precision mediump float;  
 이렇게 정의했던 값 지우면 됨 이미 내장되어 있음
+<br>
+##webGL2로 버전 바꿔보기
+vertex
+attribute → in  
+varying → out
+
+fragment
+varying → in
+외부에서 들어오는 값은 in / 내부에서 외부로 나가는 값은 out
+
+gl_FragColor > out vec4 (바꾸고싶은 이름);  
+texture2D > texture
+
+glslVersion: THREE.GLSL3 사용하는 버전 명시
+
+\*webGL2가 모든 브라우저에서 지원되지는 않음 webGL2를 써도 1에 맞추는 호환성 작업 필요

@@ -46,6 +46,7 @@ export default function () {
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
       side: THREE.DoubleSide,
+      glslVersion: THREE.GLSL3,
       // onBeforeCompile: (data) => {
       //   console.log(data);
       //   /* shader 사용하고 있음 */

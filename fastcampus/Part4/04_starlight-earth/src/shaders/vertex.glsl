@@ -1,11 +1,9 @@
-
 uniform float uTime;
 
+in float aRandomPosition; // 랜덤 값
 
-attribute float aRandomPosition; // 랜덤 값
-
-varying float vRandomPosition;   // 프래그먼트 셰이더로 전달할 변수
-varying vec2 vUv;
+out float vRandomPosition;   // 프래그먼트 셰이더로 전달할 변수
+out vec2 vUv;
 
 void main() {
     // 모델 행렬을 사용해 로컬 좌표를 월드 좌표로 변환
