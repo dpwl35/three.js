@@ -1,4 +1,6 @@
-##Starlight Earth
+## Starlight Earth
+
+### 알파맵 효과
 
 ShaderMaterial 는 map 사용해서 이미지 맵핑 X
 
@@ -55,10 +57,50 @@ void main()
 
 하얀색일땐 투명도가 1 검은색일때는 0로 만들기
 
-```javascript
+### 도트 패턴 효과
 
+13예제로 만든 fract 사용  
+fract의 실수의 소수점을 반환해주는 함수 사용 : UV 값을 몇배로 곱해서 커진 UV 좌표의 소수점을 반환 0~1사이의 값이 곱해진 배수만큼 반복
+컬러가 0.9보다 작을 때 0이 되도록 : 검은색이 더 많이 보임
+
+```javascript
+float x = vUv.x;
+float y = vUv.y;
+
+vec3 col1 = vec3(fract(x * 100.0));
+vec3 col2 = vec3(fract(y * 100.0));
+
+vec3 greenCol = vec3(0.0, 1.0, 0.0);
+
+vec3 finalCol = step(0.9, col1) *  step(0.9, col2);
+finalCol *= greenCol;
+
+gl_FragColor = vec4(finalCol , 1.0);
 ```
 
-```javascript
+### 도트 패턴 효과2 : 사각형 원형으로 만들기
 
+특정 x,y 좌표가 0.5라는 중점을 기준으로 얼마나 멀어져 있는지 계산
+
+```javascript
+float x = fract(vUv.x * 100.0);
+float y = fract(vUv.y * 100.0);
+
+float dist = length(vec2(x, y) - 0.5);
+
+vec3 greenCol = vec3(0.0, 1.0, 0.0);
+
+vec3 finalCol = mix(greenColor, vec3(0.0), step(0.1, dist));
+finalCol.g += map.r * 2.0;
+
+gl_FragColor = vec4(finalCol , alpha);
+```
+
+### 검정 부분 투명도
+
+```javascript
+vec3 finalCol = mix(greenColor, vec3(0.0), step(0.1, dist));
+finalCol.g += map.r * 2.0;
+
+gl_FragColor = vec4(finalCol , alpha * finalCol.g);
 ```
