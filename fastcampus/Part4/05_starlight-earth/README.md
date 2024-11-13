@@ -104,3 +104,17 @@ finalCol.g += map.r * 2.0;
 
 gl_FragColor = vec4(finalCol , alpha * finalCol.g);
 ```
+
+### IcosahedronGeometry 포인트 만들기
+
+ShaderMaterial는 균일하지 않아서 동그라미가 퍼져보이는데 IcosahedronGeometry는 wireframe 확인했을 때 삼각형이 균일한 모양으로 구체를 만들고있다.
+
+y= x/r - r \* 2.0 그래프
+중점에서 멀어질수록 투명해진다
+
+```javascript
+float circle(vec2 coord, float r) {
+    float fromCenter = length(coord - 0.5);
+    float strength = r / fromCenter - r * 2.0;
+}
+```

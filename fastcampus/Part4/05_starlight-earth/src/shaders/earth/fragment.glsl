@@ -15,12 +15,10 @@ void main()
     float x = fract(vUv.x * 100.0);
     float y = fract(vUv.y * 100.0);
 
-    float dist = length(vec2(x, y) - 0.5);
 
     vec3 greenCol = vec3(0.0, 1.0, 0.0);
 
-    vec3 finalCol = mix(greenColor, vec3(0.0), step(0.1, dist));
-    finalCol.g += map.r * 2.0;
+    vec3 finalCol =  map.r * greenCol * 2.0;
 
     gl_FragColor = vec4(finalCol , alpha * finalCol.g); 
     //지도 텍스처랑 합침

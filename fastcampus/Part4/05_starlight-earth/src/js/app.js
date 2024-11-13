@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import vertexShader from '../shaders/earth/vertex.glsl?raw';
 import fragmentShader from '../shaders/earth/fragment.glsl?raw';
+import pointsVertexShader from '../shaders/earthPoints/vertex.glsl?raw';
+import pointsFragmentShader from '../shaders/earthPoints/fragment.glsl?raw';
 
 export default function () {
   const renderer = new THREE.WebGLRenderer({
@@ -52,10 +54,33 @@ export default function () {
     return mesh;
   };
 
+  const createEarthPoints = () => {
+    const material = new THREE.ShaderMaterial({
+      wireframe: true,
+      uniforms: {
+        uTexture: {
+          value: textureLoader.load('assets/earth_specular_map.png'),
+        },
+      },
+      vertexShader: pointsVertexShader,
+      fragmentShader: pointsFragmentShader,
+      side: THREE.DoubleSide, //양쪽 사이드 렌더링
+      transparent: true,
+      depthWrite: false, //뒤에있는걸 숨기려는 속성 겹치면 검은 테두리 보임off
+    });
+
+    const geometry = new THREE.IcosahedronGeometry(0.8, 30, 30);
+    geometry.rotateY(-Math.PI);
+    const mesh = new THREE.Points(geometry, material);
+
+    return mesh;
+  };
+
   const create = () => {
     const earth = createEarth();
+    const earthPoints = createEarthPoints();
 
-    scene.add(earth);
+    scene.add(earth, earthPoints);
   };
 
   const resize = () => {
