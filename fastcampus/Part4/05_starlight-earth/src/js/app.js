@@ -4,6 +4,9 @@ import vertexShader from '../shaders/earth/vertex.glsl?raw';
 import fragmentShader from '../shaders/earth/fragment.glsl?raw';
 import pointsVertexShader from '../shaders/earthPoints/vertex.glsl?raw';
 import pointsFragmentShader from '../shaders/earthPoints/fragment.glsl?raw';
+import glowVertexShader from '../shaders/earthGlow/vertex.glsl?raw';
+import glowFragmentShader from '../shaders/earthGlow/fragment.glsl?raw';
+import { VertexNormalsHelper } from 'three/examples/jsm/helpers/VertexNormalsHelper.js';
 
 export default function () {
   const renderer = new THREE.WebGLRenderer({
@@ -76,11 +79,36 @@ export default function () {
     return mesh;
   };
 
+  const createEarthGlow = () => {
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        uZoom: {
+          value: 1,
+        },
+      },
+      vertexShader: glowVertexShader,
+      fragmentShader: glowFragmentShader,
+      side: THREE.BackSide,
+      transparent: true,
+    });
+
+    const geometry = new THREE.IcosahedronGeometry(1, 40, 40);
+    const mesh = new THREE.Mesh(geometry, material);
+
+    return mesh;
+  };
+
   const create = () => {
     const earth = createEarth();
     const earthPoints = createEarthPoints();
+    const earthGlow = createEarthGlow();
+    //const glowNormalsHelper = new VertexNormalsHelper(earthGlow, 0.1);
 
-    scene.add(earth, earthPoints);
+    scene.add(earth, earthPoints, earthGlow);
+
+    return {
+      earthGlow,
+    };
   };
 
   const resize = () => {
@@ -98,19 +126,28 @@ export default function () {
     window.addEventListener('resize', resize);
   };
 
-  const draw = () => {
+  const draw = (obj) => {
+    const { earthGlow } = obj;
+
     controls.update();
     renderer.render(scene, camera);
+
+    earthGlow.material.uniforms.uZoom.value = controls.target.distanceTo(
+      controls.object.position
+    ); //카메라 위치 바꿔도 (드래그)글로우 효과 잘 유지됨
+
     requestAnimationFrame(() => {
-      draw();
+      draw(obj);
     });
   };
 
   const initialize = () => {
+    const obj = create();
+
     create();
     addEvent();
     resize();
-    draw();
+    draw(obj);
   };
 
   initialize();

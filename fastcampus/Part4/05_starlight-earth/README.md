@@ -118,3 +118,14 @@ float circle(vec2 coord, float r) {
     float strength = r / fromCenter - r * 2.0;
 }
 ```
+
+### createEarthGlow
+
+글로우 효과
+normal : 물체의 면이 향하는 방향, 정점들의 수직으로 뻗은 선  
+wireframe: true 확인하면 선분이 보임
+
+```javascript
+import { VertexNormalsHelper } from 'three/examples/jsm/helpers/VertexNormalsHelper.js';
+const glowNormalsHelper = new VertexNormalsHelper(earthGlow, 0.1); //확인할 material, 길이
+```
