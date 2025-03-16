@@ -70,6 +70,7 @@ export default function () {
       side: THREE.DoubleSide, //양쪽 사이드 렌더링
       transparent: true,
       depthWrite: false, //뒤에있는걸 숨기려는 속성 겹치면 검은 테두리 보임off
+      depthTest: false
     });
 
     const geometry = new THREE.IcosahedronGeometry(0.8, 30, 30);

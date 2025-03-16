@@ -129,3 +129,8 @@ wireframe: true 확인하면 선분이 보임
 import { VertexNormalsHelper } from 'three/examples/jsm/helpers/VertexNormalsHelper.js';
 const glowNormalsHelper = new VertexNormalsHelper(earthGlow, 0.1); //확인할 material, 길이
 ```
+
+
+### 깊이 효과
+카메라에서부터 정점 사이가 멀어지면 지구 뒤쪽에 가까워짐 이 경우 초록색으로 보이게  
+vDistance 값은 카메라와의 거리 차이를 기반으로 텍스처와 초록색을 블렌딩하는 역할  
