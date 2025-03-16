@@ -1,4 +1,5 @@
 uniform sampler2D uTexture;
+uniform float uTime;
 varying vec2 vUv;
 varying float vDistance;
 
@@ -10,6 +11,11 @@ float circle(vec2 coord, float r) {
     return strength;
 }
 
+//랜덤 숫자 함수
+float random(vec2 uv) {
+    return fract(dot(uv, vec2(12.9988, 78.233)));
+}
+
 void main()
 {
     vec4 map = texture2D(uTexture, vUv);
@@ -18,11 +24,13 @@ void main()
 
     float strength = circle(gl_PointCoord, 0.01);
     float alpha = col.r * strength * vDistance;
+    float randomNumber = random(vUv + uTime / 400.0);
 
-    vec3 greenCol = vec3(0.0, 1.0, 0.0);
+    vec3 greenCol = vec3(0.08, 0.356, 0.196);
+    vec3 deepgreenCol = vec3(0.036, 0.123, 0.057);
 
-    vec3 finalCol = greenCol;
+    vec3 finalCol = mix(greenCol, deepgreenCol, randomNumber);
 
     // 수정된 코드에서 최종 색상 사용
-    gl_FragColor = vec4(greenCol, alpha); 
+    gl_FragColor = vec4(finalCol, alpha); 
 }

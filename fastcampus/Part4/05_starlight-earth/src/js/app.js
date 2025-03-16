@@ -23,6 +23,7 @@ export default function () {
     height: window.innerHeight,
   };
 
+  const clock = new THREE.Clock();
   const textureLoader = new THREE.TextureLoader(); //텍스처불러오기
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(
@@ -64,13 +65,17 @@ export default function () {
         uTexture: {
           value: textureLoader.load('assets/earth_specular_map.png'),
         },
+        uTime: {
+          value: 0
+        }
       },
       vertexShader: pointsVertexShader,
       fragmentShader: pointsFragmentShader,
       side: THREE.DoubleSide, //양쪽 사이드 렌더링
       transparent: true,
       depthWrite: false, //뒤에있는걸 숨기려는 속성 겹치면 검은 테두리 보임off
-      depthTest: false
+      depthTest: false,
+      blending: THREE.AdditiveBlending //각 픽셀의 값을 가산해서 최종색상 초록색 겹치는 부분이 밝아짐
     });
 
     const geometry = new THREE.IcosahedronGeometry(0.8, 30, 30);
@@ -108,6 +113,8 @@ export default function () {
     scene.add(earth, earthPoints, earthGlow);
 
     return {
+      earth,
+      earthPoints,
       earthGlow,
     };
   };
@@ -128,7 +135,13 @@ export default function () {
   };
 
   const draw = (obj) => {
-    const { earthGlow } = obj;
+    const { earth, earthPoints, earthGlow } = obj;
+
+   // earth.rotation.x += 0.0005;
+   // earth.rotation.y += 0.0005;
+   // earthPoints.rotation.x += 0.0005;
+   // earthPoints.rotation.y += 0.0005;
+
 
     controls.update();
     renderer.render(scene, camera);
@@ -136,6 +149,8 @@ export default function () {
     earthGlow.material.uniforms.uZoom.value = controls.target.distanceTo(
       controls.object.position
     ); //카메라 위치 바꿔도 (드래그)글로우 효과 잘 유지됨
+
+    earthPoints.material.uniforms.uTime.value = clock.getElapsedTime();
 
     requestAnimationFrame(() => {
       draw(obj);
