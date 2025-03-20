@@ -1,43 +1,74 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import vertexShader from '../shaders/vertex.glsl?raw';
+import fragmentShader from '../shaders/fragment.glsl?raw';
 
 export default function () {
   const renderer = new THREE.WebGLRenderer({
-    //렌더러 객체 생성
     alpha: true,
   });
 
   const container = document.querySelector("#container");
 
   container.appendChild(renderer.domElement);
-  //렌더러 객체 안에는 캔버스 el 정보가 담겨있는 domElement가 있다.
 
   const canvasSize = {
-    //윈도우창 넓이 = 캔버스 사이즈
     width: window.innerWidth,
     height: window.innerHeight,
   };
 
-  const scene = new THREE.Scene(); //물체를 렌더러 하기위한 씬
-  const camera = new THREE.PerspectiveCamera( //카메라 객체
+  const scene = new THREE.Scene(); 
+  const camera = new THREE.PerspectiveCamera( 
     75,
-    canvasSize.width / canvasSize.height, //카메라의 종횡비 값
+    canvasSize.width / canvasSize.height, 
     0.1,
     100
   );
-  camera.position.set(0, 0, 3);
+  camera.position.set(0, 0, 2);
 
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.1;
 
-  const createObject = () => {
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    const geometry = new THREE.PlaneGeometry(1, 1);
-    const mesh = new THREE.Mesh(geometry, material);
+  const loadImages = async () => {
+    const images = [...document.querySelectorAll('main .content img')];
 
-    scene.add(mesh);
+    const fetchImages = images.map((image) => new Promise((resolve, reject) => {
+      image.onload = resolve(image);
+      image.onerror = reject;
+    }))
+
+    const loadedImages = await Promise.all(fetchImages);
+   // console.log(loadedImages)
+
+    return loadedImages;
+  }
+
+  const createImages = (images) => {
+    //console.log('ddd', images);
+
+    const imageMeshs = images.map(image => { //이미지 갯수만큼 생성 
+
+      const {width, height, top, left} = image.getBoundingClientRect(); //이미지 위치 정보 
+      console.log(width, height, top, left);
+
+      const material = new THREE.ShaderMaterial({ 
+        vertexShader: vertexShader,
+        fragmentShader: fragmentShader,
+        side: THREE.DoubleSide
+       });
+  
+      const geometry = new THREE.PlaneGeometry(width, height, 16, 16);
+      const mesh = new THREE.Mesh(geometry, material);
+
+      return mesh;
+    });
+
+    return imageMeshs;
   };
+
+  const create = async () => {
+    const loadedImages = await loadImages();
+    const images = createImages([...loadedImages]); //배열로 받음 
+    console.log(images)
+    scene.add(...images)
+  }
 
   const resize = () => {
     canvasSize.width = window.innerWidth;
@@ -46,8 +77,8 @@ export default function () {
     camera.aspect = canvasSize.width / canvasSize.height;
     camera.updateProjectionMatrix();
 
-    renderer.setSize(canvasSize.width, canvasSize.height); //렌더러 사이즈 = 윈도우창 사이즈
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); //픽셀비율도 알맞게 지정
+    renderer.setSize(canvasSize.width, canvasSize.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
   };
 
   const addEvent = () => {
@@ -55,19 +86,18 @@ export default function () {
   };
 
   const draw = () => {
-    controls.update();
-    renderer.render(scene, camera); //렌더러에 넘겨줌
+    renderer.render(scene, camera);
     requestAnimationFrame(() => {
-      draw(); //매프레임마다 실행
+      draw();
     });
   };
 
-  const initialize = () => {
-    createObject();
+  const initialize = async () => {
+    await create();
     addEvent();
     resize();
     draw();
   };
 
-  initialize();
+  initialize().then();
 }
