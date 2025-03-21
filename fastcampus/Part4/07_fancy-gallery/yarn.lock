@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@ashthornton/asscroll@^2.0.11":
+  version "2.0.11"
+  resolved "https://registry.yarnpkg.com/@ashthornton/asscroll/-/asscroll-2.0.11.tgz#d8f3d6c52244d724bd294fa18075d97dd7689370"
+  integrity sha512-X7Z+0aePdxn2WeKTx+sX/U9KNwjRSlY+ZeoGO7ZQy4uKRZ2cSHZi5ho9WiuDAPTPj97Smb2aZ7XC8goR73SmPA==
+  dependencies:
+    "@unseenco/e" "^2.2.2"
+
 "@esbuild/android-arm64@0.16.12":
   version "0.16.12"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.16.12.tgz#86c4fdd7c0d65fe9dcbe138fbe72720658ec3b88"
@@ -171,6 +178,13 @@
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
+
+"@unseenco/e@^2.2.2":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@unseenco/e/-/e-2.4.0.tgz#28691b9e0c7f66ab2ca9ee11880003c10af500be"
+  integrity sha512-HfvX/GCyKHKo193aULxUKawjFhq+0srB80+o7/DVm2npGHOx9tykPykSDRrR/lhjQYSvgEY/zI9CSd2feD/CMg==
+  dependencies:
+    selector-set "^1.1.5"
 
 acorn-jsx@^5.3.2:
   version "5.3.2"
@@ -1264,6 +1278,11 @@ sass@^1.56.1:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
     source-map-js ">=0.6.2 <2.0.0"
+
+selector-set@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/selector-set/-/selector-set-1.1.5.tgz#60c135aea482b6f46a2d95ad72058927690a8634"
+  integrity sha512-6SQw6yMew5iOZ8/cDHDEnJWRM4ot2mxP6szZyF5ptrBogw4AcS4EXRj/8BUfgAMwVfdL84qpModlBMOl2NVrsQ==
 
 semver@^6.3.0:
   version "6.3.0"
