@@ -1,7 +1,8 @@
 import * as THREE from "three";
 import vertexShader from '../shaders/vertex.glsl?raw';
 import fragmentShader from '../shaders/fragment.glsl?raw';
-import ASScroll from '@ashthornton/asscroll'
+import ASScroll from '@ashthornton/asscroll';
+import gsap from 'gsap'
 
 const asscroll = new ASScroll({
   disableRaf : true,
@@ -23,6 +24,8 @@ export default function () {
     height: window.innerHeight,
   };
 
+  const clock = new THREE.Clock();
+  const textureLoader = new THREE.TextureLoader();
   const scene = new THREE.Scene(); 
   const camera = new THREE.PerspectiveCamera( 
     75,
@@ -52,19 +55,33 @@ export default function () {
   const createImages = (images) => {
     //console.log('ddd', images);
 
+    const material = new THREE.ShaderMaterial({ 
+      uniforms : {
+        uTexture: {
+          value: null
+        },
+        uTime : {
+          value: 0
+        },
+        uHover : {
+          value: 0
+        }
+      },
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
+      side: THREE.DoubleSide
+     });
+
     const imageMeshs = images.map(image => { //이미지 갯수만큼 생성 
 
       const {width, height} = image.getBoundingClientRect(); //이미지 위치 정보 
       //console.log(width, height, top, left);
 
-      const material = new THREE.ShaderMaterial({ 
-        vertexShader: vertexShader,
-        fragmentShader: fragmentShader,
-        side: THREE.DoubleSide
-       });
+      const clonedMaterial = material.clone();
+      clonedMaterial.uniforms.uTexture.value =  textureLoader.load(image.src);      
   
       const geometry = new THREE.PlaneGeometry(width, height, 16, 16);
-      const mesh = new THREE.Mesh(geometry, material);
+      const mesh = new THREE.Mesh(geometry, clonedMaterial);
 
       imageRepository.push({img: image, mesh}) //이미지 정보 
 
@@ -112,6 +129,27 @@ export default function () {
       resize();
       retransform(); 
     });
+
+    imageRepository.forEach(({img, mesh}) => {
+      img.addEventListener('mouseenter', () => {
+        gsap.to(mesh.material.uniforms.uHover, {
+          value : 1,
+          duration: 0.4,
+          ease: 'power1.inOut'
+        })
+      })
+    });
+
+    imageRepository.forEach(({img, mesh}) => {
+      img.addEventListener('mouseout', () => {
+        gsap.to(mesh.material.uniforms.uHover, {
+          value : 0,
+          duration: 0.4,
+           ease: 'power1.inOut'
+        })
+      })
+    });
+
   };
 
   const draw = () => {
@@ -119,6 +157,9 @@ export default function () {
     retransform();
 
     asscroll.update();
+    imageRepository.forEach(({img, mesh}) => {
+      mesh.material.uniforms.uTime.value = clock.getElapsedTime();
+    })
 
     requestAnimationFrame(() => {
       draw();

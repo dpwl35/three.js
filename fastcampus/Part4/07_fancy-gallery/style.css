@@ -1,6 +1,6 @@
 html,
 body {
-  background-color: white;
+  /* background-color: white; */
 }
 
 * {
@@ -17,6 +17,7 @@ a {
   top: 0;
   left: 0;
   outline: none;
+  z-index: -1;
 }
 
 header nav ul {

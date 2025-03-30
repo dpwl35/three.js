@@ -55,7 +55,47 @@ const {width: originWidth} = mesh.geometry.parameters;
 const scale = width / originWidth; //넓이 갱신
 mesh.scale.x = scale;
 mesh.scale.y = scale;
+```  
+
+## 이미지 입히기
+```javascript
+const material = new THREE.ShaderMaterial({ 
+uniforms : {
+    uTexture: {
+        value: textureLoader.load(image.src)
+        }
+    },
+... 
+});
+
+uniform sampler2D uTexture;
+varying vec2 vUv;
+
+void main() {
+    vec4 tex = texture2D(uTexture, vUv);
+    gl_FragColor = tex;
+}
+
 ```
+uniforms에 img 주소 값을 넘겨주고 fragment에서 받는다. 
 
 
+## 파동 효과
+```javascript
+void main() {
 
+    float dist = length(vUv - 0.5); // 0 ~0.5 * 20 => 0 ~10 사이의 값 
+
+    vec2 wave = vec2(sin(dist * 20.0), cos(dist * 20.0));
+    vec2 newUV = vUv + wave * 0.3;
+
+    ...
+}
+```
+wave 작업 : y = sin(x * n) 숫자를 곱해주면 파동이 훨씬 많아진다. cos 마찬가지  
+
+vec2 newUV = vUv; newUv.x += 0.1; 하면 텍스처 끝부분이 늘어나는 것처럼 보인다. 
+이런 개념을 활용해서 변형을 주는 것.
+
+
+*#container가 img보다 z-index가 높으면 hover 이벤트가 발생하지 않기 때문에 이런 부분도 수정 
