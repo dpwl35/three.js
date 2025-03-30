@@ -13,6 +13,7 @@ asscroll.enable();
 export default function () {
   const renderer = new THREE.WebGLRenderer({
     alpha: true,
+    antialias: true
   });
 
   const container = document.querySelector("#container");
@@ -24,6 +25,7 @@ export default function () {
     height: window.innerHeight,
   };
 
+  const raycaster = new THREE.Raycaster();
   const clock = new THREE.Clock();
   const textureLoader = new THREE.TextureLoader();
   const scene = new THREE.Scene(); 
@@ -65,6 +67,12 @@ export default function () {
         },
         uHover : {
           value: 0
+        },
+        uHoverX: {
+          value: 0.5
+        },
+        uHoverY: {
+          value: 0.5
         }
       },
       vertexShader: vertexShader,
@@ -125,6 +133,26 @@ export default function () {
   }
 
   const addEvent = () => {
+    window.addEventListener('mousemove', (e) => {
+      const pointer = {
+        x: (e.clientX / canvasSize.width) * 2 - 1 ,
+        y: -(e.clientY / canvasSize.height) * 2 + 1
+      }
+
+      raycaster.setFromCamera(pointer, camera);
+
+      const intersects = raycaster.intersectObjects(scene.children);
+
+      if(intersects.length > 0) { // 0보다 값이 크면 교차하는 mesh가 있음 
+        let mesh = intersects[0].object;
+        mesh.material.uniforms.uHoverX.value = intersects[0].uv.x - 0.5;
+        mesh.material.uniforms.uHoverY.value = intersects[0].uv.y - 0.5;
+
+        // console.log(mesh.material.uniforms.uHoverX) 0~1 사이의 uv값 
+
+      }
+    })
+
     window.addEventListener("resize", () => {
       resize();
       retransform(); 

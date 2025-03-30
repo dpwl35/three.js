@@ -98,4 +98,7 @@ vec2 newUV = vUv; newUv.x += 0.1; 하면 텍스처 끝부분이 늘어나는 것
 이런 개념을 활용해서 변형을 주는 것.
 
 
-*#container가 img보다 z-index가 높으면 hover 이벤트가 발생하지 않기 때문에 이런 부분도 수정 
+*#container가 img보다 z-index가 높으면 hover 이벤트가 발생하지 않기 때문에 이런 부분도 수정  
+
+Raycaster : 오브젝트 교체 여부 판단  
+ㄴ intersectObjects : 교차되는 오브젝트를 구하는 함수  
