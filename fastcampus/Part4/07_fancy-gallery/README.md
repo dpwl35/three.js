@@ -102,3 +102,11 @@ vec2 newUV = vUv; newUv.x += 0.1; 하면 텍스처 끝부분이 늘어나는 것
 
 Raycaster : 오브젝트 교체 여부 판단  
 ㄴ intersectObjects : 교차되는 오브젝트를 구하는 함수  
+
+
+## postprocessing
+```javascript
+const composer = new EffectComposer(renderer);
+```
+composer 이펙트 관리자  > 현재 화면 사이즈 정의해주기
+renderPass객체를 만들고 현재 사용하고 있는 scene, camera 정보도 넘겨준다. 
