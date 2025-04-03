@@ -148,18 +148,20 @@ export default function () {
     const renderPass = new RenderPass(scene, camera);
     composer.addPass(renderPass);
 
-    const customShader = {
-      uniforms: {
-        tDiffuse: {
-          value: null
+    const customShader = new THREE.ShaderMaterial(
+      {
+        uniforms: {
+          tDiffuse: {
+            value: null
+          },
+          uTime : {
+            value: 0
+          }
         },
-        uTime : {
-          value: 0
-        }
-      },
-      vertexShader: postVertexShader,
-      fragmentShader: postFragmentShader
-    }
+        vertexShader: postVertexShader,
+        fragmentShader: postFragmentShader
+      }
+    );
 
     const customPass = new ShaderPass(customShader);
     composer.addPass(customPass);

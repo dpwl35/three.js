@@ -110,3 +110,23 @@ const composer = new EffectComposer(renderer);
 ```
 composer 이펙트 관리자  > 현재 화면 사이즈 정의해주기
 renderPass객체를 만들고 현재 사용하고 있는 scene, camera 정보도 넘겨준다. 
+
+
+## 특정범위만 적용하기 
+```javascript
+void main () {
+    vec2 newUV = vUv;
+
+    float side = smoothstep(0.4, 0.0, newUV.y); 
+    newUV.x -= (newUV.x - 0.5) * side * 0.05; 
+
+    vec4 tex = texture2D(tDiffuse, newUV);
+    vec4 sideColor = vec4(0.0, 0.0, side, 1.0);
+
+    gl_FragColor = tex ;
+}
+```
+float side = smoothstep(0.4, 0.0, newUV.x) + smoothstep(0.6, 1.0, newUV.x);  
+float side = step(newUV.x, 0.1) + step(0.9, newUV.x);  
+
+step 칼같이, smoothstep 부드럽게  
