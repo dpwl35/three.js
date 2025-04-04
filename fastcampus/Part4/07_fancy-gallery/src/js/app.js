@@ -156,6 +156,9 @@ export default function () {
           },
           uTime : {
             value: 0
+          },
+          uScrolling : {
+            value: 0
           }
         },
         vertexShader: postVertexShader,
@@ -171,7 +174,25 @@ export default function () {
     }
   }
 
-  const addEvent = () => {
+  const addEvent = (effects) => {
+    const {customShader} = effects;
+
+    asscroll.on('update', ({targetPos, currentPos}) => {
+      const speed =Math.abs(targetPos - currentPos);
+
+      if (speed > 5) {
+        gsap.to(customShader.uniforms.uScrolling, {
+          value : 1,
+          duration: 0.5
+        })
+      }else {
+        gsap.to(customShader.uniforms.uScrolling, {
+          value : 0,
+          duration: 0.5
+        })
+      }
+    });
+
     window.addEventListener('mousemove', (e) => {
       const pointer = {
         x: (e.clientX / canvasSize.width) * 2 - 1 ,
@@ -241,7 +262,7 @@ export default function () {
   const initialize = async () => {
     await create();
     const effects =  addPostEffects();
-    addEvent();
+    addEvent(effects);
     resize();
     draw(effects);
   };
