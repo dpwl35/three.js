@@ -12,24 +12,24 @@ import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 
 
+import Swup from 'swup';
+import SwupJsPlugin from '@swup/js-plugin';
 
-const asscroll = new ASScroll({
+
+let asscroll = new ASScroll({
   disableRaf : true,
 });
 asscroll.enable();
 
 
 export default function () {
+
   const renderer = new THREE.WebGLRenderer({
     alpha: true,
     antialias: true
   });
 
   const composer = new EffectComposer(renderer);
-
-  const container = document.querySelector("#container");
-
-  container.appendChild(renderer.domElement);
 
   const canvasSize = {
     width: window.innerWidth,
@@ -49,14 +49,52 @@ export default function () {
   camera.position.set(0, 0, 50);
   camera.fov = Math.atan(canvasSize.height / 2 / 50 ) * (180 / Math.PI) * 2;
 
-  const imageRepository = [];
+  let imageRepository = [];
+  let animationId = '';
+
+  const swup = new Swup({
+    plugins: [
+      new SwupJsPlugin([{
+        from: '(.*)',
+        to: '(.*)',
+        out: async () => {
+          asscroll.disable();
+
+          imageRepository.forEach(({mesh}) => {
+            scene.remove(mesh);
+          });
+
+          imageRepository = [];
+
+          window.removeEventListener('resize', resize);
+
+          await gsap.to('#swup', { opacity: 0, duration: 0.25 });
+        },
+        in: async () => {
+          await gsap.fromTo('#swup', { opacity: 0 }, { 
+            opacity: 1, 
+            duration: 0.25,
+            onComplete: (next) => {
+              window.cancelAnimationFrame(animationId);
+              asscroll = new ASScroll({ disable: true });
+              asscroll.enable();
+              initialize().then();
+            }
+          });
+        }
+       }])
+    ]
+  });
 
   const loadImages = async () => {
     const images = [...document.querySelectorAll('main .content img')];
 
-    const fetchImages = images.map((image) => new Promise((resolve, reject) => {
-      image.onload = resolve(image);
-      image.onerror = reject;
+    const fetchImages = images.map((image) => 
+      new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = image.sec;
+        img.onload = resolve(image);
+        img.onerror = reject;
     }))
 
     const loadedImages = await Promise.all(fetchImages);
@@ -254,12 +292,16 @@ export default function () {
       mesh.material.uniforms.uTime.value = clock.getElapsedTime();
     })
 
-    requestAnimationFrame(() => {
+    animationId =  requestAnimationFrame(() => {
       draw(effects);
     });
   };
 
   const initialize = async () => {
+    const container = document.querySelector("#container");
+
+    container.appendChild(renderer.domElement);
+
     await create();
     const effects =  addPostEffects();
     addEvent(effects);
