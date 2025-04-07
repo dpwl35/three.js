@@ -40,6 +40,14 @@ export default function () {
 
   const worldObjects = [];
 
+  const floorMaterial = new CANNON.Material('floor');
+  const sphereMaterial = new CANNON.Material('sphere');
+  const contactMaterial = new CANNON.ContactMaterial(floorMaterial, sphereMaterial, {
+    friction: 0.1,
+    restitution: 0.5
+  });
+  world.addContactMaterial(contactMaterial);
+
   /* 조명 */
   const createLight = () => {
     const light = new THREE.DirectionalLight(0xffffff);
@@ -59,10 +67,6 @@ export default function () {
     scene.add(mesh);
 
     const shape = new CANNON.Box(new CANNON.Vec3(6 / 2, 1 / 2, 6 / 2)); //geometry 크기의 절반 
-    const floorMaterial = new CANNON.Material({
-      friction: 0.1, //마찰력
-      restitution: 0.5 //탄성 
-    })
     const body = new CANNON.Body({
       mass: 0, // 바닥은 정적인 물체니까 질량 0으로 고정  
       shape: shape,
@@ -72,6 +76,32 @@ export default function () {
     world.addBody(body);
     worldObjects.push({mesh, body});
   };
+
+  /* 공 */
+  const createSphere = () => {
+    const material = new THREE.MeshStandardMaterial({ color: 0xeeeeee });
+    const geometry = new THREE.SphereGeometry(0.3, 30, 30);
+    const mesh = new THREE.Mesh(geometry, material);
+
+    mesh.castShadow = true; 
+    mesh.receiveShadow = false;
+
+    scene.add(mesh);
+
+    const shape = new CANNON.Sphere(0.3);
+
+    const body = new CANNON.Body({
+      mass: 1,
+      shape,
+      material: sphereMaterial
+    });
+    body.position.y = 5;
+    body.name = 'sphere';
+    world.addBody(body);
+
+    worldObjects.push({mesh, body});
+  }
+
 
   const createObject = () => {
     const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -102,6 +132,13 @@ export default function () {
     world.step( 1 / 60 ); //60분의 1 프레임 
 
     worldObjects.forEach(worldObjects => {
+      if (worldObjects.body.name === 'sphere') {
+        worldObjects.body.applyImpulse(
+          new CANNON.Vec3(0.01, 0, 0), 
+          worldObjects.body.position
+        );
+      }
+      
       //Three.js의 mesh가 Cannon.js의 body를 따라가도록 실시간 위치/회전 정보를 복사해주는 필수 동기화
       worldObjects.mesh.position.copy(worldObjects.body.position); 
       worldObjects.mesh.quaternion.copy(worldObjects.body.quaternion);
@@ -116,6 +153,7 @@ export default function () {
     createLight();
     createFloor();
     createObject();
+    createSphere();
     addEvent();
     resize();
     draw();
