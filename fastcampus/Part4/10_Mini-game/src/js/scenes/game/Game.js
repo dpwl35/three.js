@@ -1,12 +1,12 @@
 import * as THREE from "three";
 import { SWorld } from "../../core/World";
-import {Floor} from '../game/models/Floor.js'
-import {Light } from '../game/tools/Light.js';
+import { Floor } from '../game/models/Floor.js'
+import { Light } from '../game/tools/Light.js';
 
 export class Game {
     constructor() {
         this.world = SWorld;
-        this.scene = new THREE.Scene();
+        this.scene = new THREE.Scene(); //물체를 렌더러 하기 위한 scene
         this.world.currentScene = this.scene;
 
        this.addModels();

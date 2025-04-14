@@ -9,8 +9,8 @@ export class Camera extends THREE.PerspectiveCamera {
 
     constructor(world) {
         super(75, world.sizer.width / world.sizer.height, 0.1, 100);
-        this.world = world;
-        this.domElement = this.world.domElement;
+        this.world = world; // World 인스턴스 저장
+        this.domElement = this.world.domElement; //OrbitControls가 조작할 대상인 <canvas>
         this.position.set(0, 2, 5);
 
         this.addControls();
