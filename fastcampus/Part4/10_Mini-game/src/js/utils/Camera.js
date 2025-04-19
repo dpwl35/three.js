@@ -27,7 +27,8 @@ export class Camera extends THREE.PerspectiveCamera {
         this.updateProjectionMatrix();
     }
 
-    update() {
-        this.controls.update();
+    update({ position }) {
+        this.rotation.x = -0.6;
+        this.position.set(position.x, position.y + 2, position.z + 2.3)
     }
 }

@@ -26,8 +26,8 @@ export class World {
         this.renderer.resize();
     }
 
-    update() {
-        this.camera.update();
+    update(player) {
+        this.camera.update(player);
         this.renderer.update();
     }
 

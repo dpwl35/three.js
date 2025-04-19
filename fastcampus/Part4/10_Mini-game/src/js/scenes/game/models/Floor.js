@@ -13,7 +13,8 @@ export class Floor extends THREE.Mesh {
         const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
         
         super(geometry, material);
-        this.body = new PhysicsFloor(width, height, depth, position)
+        this.body = new PhysicsFloor(width, height, depth, position);
+        this.receiveShadow = true;
     }
 }
 
