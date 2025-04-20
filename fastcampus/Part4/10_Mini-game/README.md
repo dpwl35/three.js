@@ -1,4 +1,8 @@
-## 프로젝트 구조 만들기
+## 프로젝트 구조 만들기  
+
+✔️ 오브젝트는 클래스 구조로 반복 생성  
+✔️ 각자 .body를 갖고 Cannon Body와 연결  
+✔️ Physics 클래스에서 add()와 update()로 중앙관리  
 
 ```javascript
 [ Game.js ]
@@ -31,3 +35,4 @@ this.render(this.currentScene, this.camera); // 씬 + 카메라로 그리기
 │   └── Sizer.js             // 창 크기 저장 및 resize 이벤트 발생  
 │  
 └── app.js                   // 프로젝트 진입점: Game 인스턴스 생성 및 실행  
+
