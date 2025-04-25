@@ -36,3 +36,13 @@ this.render(this.currentScene, this.camera); // 씬 + 카메라로 그리기
 │  
 └── app.js                   // 프로젝트 진입점: Game 인스턴스 생성 및 실행  
 
+
+### 시간 오차 줄이기
+this.step(1 / 60) 이렇게만 값을 넘겨주면 브라우저 성능에 따라 오차가 발생할 수 있다.  
+
+```javascript
+clock = new THREE.Clock();
+
+const deltaTime = this.clock.getDelta();
+this.step(1 / 60, deltaTime); 
+```

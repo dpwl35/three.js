@@ -41,12 +41,16 @@ export class PhysicsBarricade extends CANNON.Body {
     }
 
     update(duration) {
-        gsap.to(this.position, {
+        this.anime = gsap.to(this.position, {
             duration,
             x: -this.origniX, 
             ease: 'power1.inOut',
             yoyo: true,
             repeat: -1,
         });
+    }
+
+    reset() {
+        this.anime.kill();
     }
 }

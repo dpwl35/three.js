@@ -36,7 +36,7 @@ export class PhysicsRoller extends CANNON.Body {
         const quaternion = {
             y: 0
         }
-        gsap.to(quaternion, {
+        this.anime =  gsap.to(quaternion, {
             duration,
             y: Math.PI * 2, 
             ease: 'none',
@@ -47,5 +47,9 @@ export class PhysicsRoller extends CANNON.Body {
                 this.quaternion.setFromAxisAngle(axis, quaternion.y)
             }
         })
+    }
+
+    reset() {
+        this.anime.kill();
     }
 }

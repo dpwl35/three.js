@@ -5,17 +5,23 @@ import { Floor } from '../game/models/Floor.js';
 import { Player } from '../game/models/Player.js';
 import { Barricade  } from "./models/Barricade.js";
 import { Roller } from "./models/Roller.js";
+import { Goal } from './models/Goal.js';
 import { Light } from '../game/tools/Light.js';
+import { Timer } from '../game/tools/Timer.js';
+import { SEventEmitter } from "../../utils/EventEmitter3.js";
 
 export class Game {
     constructor() {
+      this.timer = new Timer(3, document.querySelector('.time h1'));
         this.world = SWorld;
         this.scene = new THREE.Scene(); //물체를 렌더러 하기 위한 scene
         this.world.currentScene = this.scene;
 
         this.physics = SPhasics;
+        this.eventEmitter = SEventEmitter; 
 
        this.addModels();
+       this.eventEmitter.onLose(() => this.reset());
     }
 
     addModels() {
@@ -26,6 +32,7 @@ export class Game {
         this.barricade1 = new Barricade(1.5, 1.5, 0.5, { x: -1.5, y: 1.4, z: 3});
         this.barricade2 = new Barricade(1.5, 1.5, 0.5, { x: 2, y: 1.4, z: -2 });
         this.roller = new Roller(0.3, 0.3, 4, { x: 0, y: 1, z: -17 });
+        this.goal = new Goal(1,  { x: 0, y: 1, z: -35 });
         this.light = new Light();
 
         this.scene.add( 
@@ -38,36 +45,52 @@ export class Game {
           this.barricade1,
           this.barricade2,
           this.roller,
+          this.goal,
 
           new THREE.CameraHelper(this.light.shadow.camera)
         );
-
+        
+        this.models = this.scene.children.filter((child) => child.isMesh);
         this.physics.add(
-          this.player.body, 
-          this.floor1.body, 
-          this.floor2.body, 
-          this.floor3.body,
-          this.barricade1.body,
-          this.barricade2.body,
-          this.roller.body
+          ...this.models.map(model => model.body).filter(v => !!v)
         );
+
+        // this.physics.add(
+        //   this.player.body, 
+        //   this.floor1.body, 
+        //   this.floor2.body, 
+        //   this.floor3.body,
+        //   this.barricade1.body,
+        //   this.barricade2.body,
+        //   this.roller.body,
+        //   this.goal.body
+        // );
     }
 
     play() {
+        this.timer.update();
         this.world.update(this.player);
         this.light.update(this.world.camera);
-        this.physics.update(
-          this.player, 
-          this.floor1, 
-          this.floor2,  
-          this.floor3,
-          this.barricade1, 
-          this.barricade2, 
-          this.roller
-        );
+        this.physics.update(...this.models);
+
+        // this.physics.update(
+        //   this.player, 
+        //   this.floor1, 
+        //   this.floor2,  
+        //   this.floor3,
+        //   this.barricade1, 
+        //   this.barricade2, 
+        //   this.roller,
+        //   this.goal
+        // );
     
         window.requestAnimationFrame(() => {
           this.play();
         })
-      }
+    }
+
+    reset() {
+      this.timer.stop();
+      this.models.forEach(model => model.body.reset?.());
+    }
 }

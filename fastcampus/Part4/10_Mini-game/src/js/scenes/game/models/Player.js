@@ -23,6 +23,7 @@ export class Player extends THREE.Mesh {
 //포지션에 관련된 데이터
 class PhysicsPlayer extends CANNON.Body {
     name = 'player';
+    isReset = false;
 
     constructor(radius, position) {
         const shape = new CANNON.Sphere(radius);
@@ -59,6 +60,8 @@ class PhysicsPlayer extends CANNON.Body {
         })
 
         this.physics.addEventListener('postStep', () => {
+            if(this.isReset) return; 
+
             const x = isArrowLeftPressed ? -1 : isArrowRightPressed ? 1 : 0;
             const y = isSpacePressed ? 5 : 0; //질량 상관있음 
             const z = isArrowUpPressed ? -1 : isArrowDownPressed ? 1 : 0;
@@ -86,5 +89,12 @@ class PhysicsPlayer extends CANNON.Body {
                 }
             })
         })
+    }
+
+    reset() {
+        this.position.copy(this.initPosition);
+        this.mass = 0;
+        this.velocity.set(0, 0, 0);
+        this.isReset = true;
     }
 }

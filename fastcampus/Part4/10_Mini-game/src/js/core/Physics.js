@@ -1,6 +1,9 @@
+import * as THREE from "three";
 import * as CANNON from "cannon-es";
 
 export class Physics extends CANNON.World {
+    clock = new THREE.Clock();
+
     constructor() {
         super();  
 
@@ -14,7 +17,8 @@ export class Physics extends CANNON.World {
     }
 
     update(...models) {
-        this.step(1 / 60); //60 프레임
+        const deltaTime = this.clock.getDelta();
+        this.step(1 / 60, deltaTime); //60 프레임
 
         models.forEach((model) => {
             if(model.body) {
