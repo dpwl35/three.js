@@ -11,7 +11,8 @@ export class Camera extends THREE.PerspectiveCamera {
         super(75, world.sizer.width / world.sizer.height, 0.1, 100);
         this.world = world; // World 인스턴스 저장
         this.domElement = this.world.domElement; //OrbitControls가 조작할 대상인 <canvas>
-        this.position.set(0, 2, 5);
+        this.position.set(0, 20, 15);
+        this.rotation.x = -Math.PI / 3;
 
         this.addControls();
     }
@@ -27,7 +28,10 @@ export class Camera extends THREE.PerspectiveCamera {
         this.updateProjectionMatrix();
     }
 
-    update({ position }) {
+    update(position) {
+
+        if(!position) return;
+
         this.rotation.x = -0.6;
         this.position.set(position.x, position.y + 2, position.z + 2.3)
     }
