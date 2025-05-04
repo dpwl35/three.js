@@ -119,6 +119,7 @@ class PhysicsBird extends CANNON.Body {
   
         if (event.body.name === 'zone' && dot > 0.5) {
           this.eventEmitter.enter();
+          console.log('enter');
         }
       });
   

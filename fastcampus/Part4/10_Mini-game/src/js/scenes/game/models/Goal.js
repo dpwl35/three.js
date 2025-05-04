@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 import gsap from 'gsap';
+import { SEventEmitter } from "../../../utils/EventEmitter3";
 
 export class Goal extends THREE.Mesh {
     name = 'goal';
@@ -25,7 +26,14 @@ class PhysicsGoal extends CANNON.Body {
     constructor(radius, position) {
         const shape = new CANNON.Cylinder(0.1, radius, radius, 12);
         const material = new CANNON.Material();
-
+        
         super({ shape, material, mass: 0, position})
+        this.eventEmitter = SEventEmitter;
+        this.eventEmitter.onWin(() => {
+            setTimeout(() => {
+                this.eventEmitter.clear('win');
+                this.eventEmitter.changeScene('home');
+            }, 0);
+        })
     }
 }

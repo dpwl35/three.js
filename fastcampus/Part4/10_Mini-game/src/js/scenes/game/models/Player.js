@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 import { SPhasics } from '../../../core/Physics.js'
+import { SEventEmitter } from "../../../utils/EventEmitter3.js";
 
 export class Player extends THREE.Mesh {
     name = 'player';
@@ -31,6 +32,7 @@ class PhysicsPlayer extends CANNON.Body {
 
         super({ shape, material, mass: 10, position });
         this.physics = SPhasics;
+        this.evenEmitter = SEventEmitter;
 
         this.addKeydownEvent();
     }
@@ -82,10 +84,14 @@ class PhysicsPlayer extends CANNON.Body {
        
             //충돌됐을 때 호출되는 이벤트
             this.addEventListener('collide', (event) => {
-                console.log(event);
+                //console.log(event);
 
                 if(event.body.name === 'floor') {
                     isLanded = true;
+                }
+
+                if(event.body.name === 'goal') {
+                    this.evenEmitter.win();
                 }
             })
         })

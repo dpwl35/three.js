@@ -18,6 +18,34 @@ export class Eventermitter {
     onLose(callbackFn) {
         this.eventEmitter.on('lose', callbackFn);
     }
+
+    win() {
+        this.eventEmitter.emit('win');
+    }
+
+    onWin(callbackFn) {
+        this.eventEmitter.on('win', callbackFn);
+    }
+
+    enter() {
+        this.eventEmitter.emit('enter');
+    }
+
+    onEnter(callbackFn) {
+        this.eventEmitter.on('enter', callbackFn);
+    }
+
+    changeScene(scene) {
+        this.eventEmitter.emit('changeScene', scene);
+    }
+
+    onchangeScene(callbackFn) {
+        this.eventEmitter.on('changeScene', callbackFn);
+    }
+
+    clear(event) {
+        this.eventEmitter.removeListener(event);
+    }
 }
 
 export const SEventEmitter = new Eventermitter()

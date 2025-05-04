@@ -11,17 +11,22 @@ import { Timer } from '../game/tools/Timer.js';
 import { SEventEmitter } from "../../utils/EventEmitter3.js";
 
 export class Game {
-    constructor() {
-      this.timer = new Timer(3, document.querySelector('.time h1'));
-        this.world = SWorld;
-        this.scene = new THREE.Scene(); //물체를 렌더러 하기 위한 scene
-        this.world.currentScene = this.scene;
+  initialLized = false;
+  raf = 0;
 
-        this.physics = SPhasics;
-        this.eventEmitter = SEventEmitter; 
+    init() {
+      this.timer = new Timer(15, document.querySelector('.time h1'));
+      this.world = SWorld;
+      this.scene = new THREE.Scene(); //물체를 렌더러 하기 위한 scene
+      this.world.currentScene = this.scene;
+
+      this.physics = SPhasics;
+      this.eventEmitter = SEventEmitter; 
 
        this.addModels();
        this.eventEmitter.onLose(() => this.reset());
+
+       this.initialLized = true;
     }
 
     addModels() {
@@ -68,8 +73,10 @@ export class Game {
     }
 
     play() {
+      if (!this.initialLized) return;
+
         this.timer.update();
-        this.world.update(this.player);
+        this.world.update(this.player, 'near');
         this.light.update(this.world.camera);
         this.physics.update(...this.models);
 
@@ -84,7 +91,7 @@ export class Game {
         //   this.goal
         // );
     
-        window.requestAnimationFrame(() => {
+        this.raf = window.requestAnimationFrame(() => {
           this.play();
         })
     }
@@ -92,5 +99,21 @@ export class Game {
     reset() {
       this.timer.stop();
       this.models.forEach(model => model.body.reset?.());
+    }
+
+    dispose() {
+      if(!this.initialLized) return;
+      this.reset();
+      const children = [...this.scene.children];
+      children.forEach(object => {
+        if(object.isMesh) {
+          object.geometry.dispose();
+          object.material.dispose();
+          if (object.body) this.physics.removeBody(object.body);
+        }
+        this.scene.remove(object);
+      })
+      window.cancelAnimationFrame(this.raf);
+      this.initialLized = false;
     }
 }
