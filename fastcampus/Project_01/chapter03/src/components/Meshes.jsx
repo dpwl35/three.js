@@ -74,7 +74,13 @@ export const Meshes = () => {
         castShadow
         receiveShadow
       >
-        <meshStandardMaterial color={0xff0000} roughness={0.5} metalness={1} />
+        <meshStandardMaterial
+          color={0xffff00}
+          roughness={0.5}
+          metalness={1}
+          emissive={0xffff00}
+          emissiveIntensity={2}
+        />
       </TorusKnot>
       <TorusKnot
         args={[1, 0.2]}

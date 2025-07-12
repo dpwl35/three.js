@@ -5,6 +5,7 @@ import { Lights } from "./Lights";
 import { Controls } from "./Controls";
 import { GLBModel } from "./GLBModel";
 import { Dancer } from "./Dancer";
+import { EffectComposer } from "@react-three/postprocessing";
 
 export const MainCanvas = () => {
   return (
@@ -25,6 +26,7 @@ export const MainCanvas = () => {
       <Meshes />
       {/* <GLBModel /> */}
       <Dancer />
+      <EffectComposer />
     </Canvas>
   );
 };
