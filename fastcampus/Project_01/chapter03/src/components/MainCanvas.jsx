@@ -15,7 +15,7 @@ export const MainCanvas = () => {
         aspect: window.innerWidth / window.innerHeight,
         near: 0.1,
         far: 100,
-        position: [5, 5, 5],
+        position: [15, 15, 15],
       }}
       scene={{ background: new Color(0x000000) }} // 매번 리렌더되므로, 지양해야할 패턴
     >
