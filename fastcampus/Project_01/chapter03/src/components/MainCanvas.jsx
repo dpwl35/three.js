@@ -4,6 +4,7 @@ import { Meshes } from "./Meshes";
 import { Lights } from "./Lights";
 import { Controls } from "./Controls";
 import { GLBModel } from "./GLBModel";
+import { Dancer } from "./Dancer";
 
 export const MainCanvas = () => {
   return (
@@ -22,7 +23,8 @@ export const MainCanvas = () => {
       <Controls />
       <Lights />
       <Meshes />
-      <GLBModel />
+      {/* <GLBModel /> */}
+      <Dancer />
     </Canvas>
   );
 };
