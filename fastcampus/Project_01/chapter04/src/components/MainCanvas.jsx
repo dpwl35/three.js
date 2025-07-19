@@ -4,9 +4,9 @@ import * as THREE from "three";
 import { Dancer } from "./Dancer";
 import { Suspense } from "react";
 import { Loader } from "./Loader";
-import { MovingDOM } from "./dom/MovingDOM";
 import { useRecoilValue } from "recoil";
 import { IsEnteredAtom } from "../stores";
+import { MovingDOM } from "./dom/MovingDOM";
 
 export const MainCanvas = () => {
   const isEntered = useRecoilValue(IsEnteredAtom);

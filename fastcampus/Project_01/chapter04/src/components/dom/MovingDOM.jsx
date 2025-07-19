@@ -26,7 +26,8 @@ export const MovingDOM = () => {
       !article08Ref.current
     )
       return;
-
+    // range : 각 페이지의 처음이 되면 opacity : 1 , 끝이 되면 0이 되어서 안보이게
+    // curve : 각 페이지의 처음되 끝은 0 중간에는 1 선명도
     article01Ref.current.style.opacity = `${1 - scroll.range(0, 1 / 8)}`;
     article02Ref.current.style.opacity = `${1 - scroll.range(1 / 8, 1 / 8)}`;
     article03Ref.current.style.opacity = `${scroll.curve(2 / 8, 1 / 8)}`;
@@ -86,16 +87,12 @@ export const MovingDOM = () => {
   );
 };
 
-/*
-
-*/
-
 const ArticleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  opacity: 0;
+  opacity: 1;
   width: 100vw;
   height: 100vh;
   &.height-4 {

@@ -362,6 +362,13 @@ export const Dancer = () => {
             alphaTest={0.001}
           />
         </Points>
+        <PositionalAudio
+          position={[-24, 0, 0]}
+          autoplay
+          url="/audio/bgm.mp3"
+          distance={50}
+          loop
+        />
       </>
     );
   }
