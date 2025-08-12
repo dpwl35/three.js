@@ -1,6 +1,4 @@
-# r3f 최적화 알아보기
+# preload 개념
 
-## instancing
-
-Mesh를 화면에 표현할 때 WebGL은 GPU로 **각 Mesh마다 한 번씩 드로우 콜(draw call)**을 보낸다.
-instancing 방식을 사용하면 수많은 mesh 수에 상관없이 한번에 드로우 콜로 해당 작업을 수행해 성능이 좋아진다.
+Preload는 특정 asset이 사용되기 전에 미리 load하는 기법이다.  
+이를 이용하면 사용시점에 loding이 걸리지 않고 미리 로드함으로써 사용성을 개선하는 장점이 있다.
