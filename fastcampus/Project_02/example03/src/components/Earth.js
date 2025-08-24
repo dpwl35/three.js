@@ -12,7 +12,12 @@ const Earth = () => {
   });
 
   return (
-    <mesh scale={1.3} rotation-x={-Math.PI / 2} position={[0, -2, 0]} ref={ref}>
+    <mesh
+      scale={1.3}
+      rotation-x={-Math.PI / 2}
+      position={[0, -1.5, 0]}
+      ref={ref}
+    >
       <primitive object={glb.scene} />
     </mesh>
   );

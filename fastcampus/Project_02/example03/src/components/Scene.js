@@ -37,10 +37,15 @@ const Scene = () => {
       <Lights />
       <Earth />
       {content?.map((el, i) => {
+        const angle = (i / (content.length - 1)) * Math.PI;
+        const radius = 2;
+        const x = radius * Math.cos(angle);
+        const y = radius * Math.sin(angle);
         return (
           <Weather
             key={i + "KEY"}
-            position={[-1 + i * 0.5, 0, 0]}
+            position={[x, y - 1, 0]}
+            rotation-y={i * 1}
             weather={el.weatherData?.weather[0]?.main?.toLowerCase()}
           />
         );
