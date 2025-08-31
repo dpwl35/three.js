@@ -9,67 +9,67 @@ import { FocusWeather } from "./FocusWeather";
 import Clouds from "./Clouds";
 
 const Scene = () => {
-    const [content, setContent] = useState(null);
+  const [content, setContent] = useState(null);
 
-    const getCitiesWeather = () => {
-        const promises = cities?.map((city) => {
-          return getCityWeather(city);
-        });
-      
-        Promise.all(promises)
-            .then((weatherDataArray) => {
-                setContent(weatherDataArray);
-            })
-            .catch((error) => {
-                console.error("Error Api", error);
-            });
-    };
+  const getCitiesWeather = () => {
+    const promises = cities?.map((city) => {
+      return getCityWeather(city);
+    });
 
-    useEffect(() => {
-        getCitiesWeather();
-    }, []);
+    Promise.all(promises)
+      .then((weatherDataArray) => {
+        setContent(weatherDataArray);
+      })
+      .catch((error) => {
+        console.error("Error Api", error);
+      });
+  };
 
-    useEffect(()=>{
-        console.log(content)
-    },[content])
+  useEffect(() => {
+    getCitiesWeather();
+  }, []);
 
-    return(
-        <>
-            <Lights/>
-            <Earth />
-            <Clouds/>
-            <Stars 
-                radius={50} 
-                depth={50} 
-                count={1000} 
-                factor={4}
-                saturation={0}
-                fade
-                speed={1}
-                 />
-            <Bounds clip observe margin={0.7}>
-                <FocusWeather>
-                {content?.map((el, i)=> {
-                    const angle = (i / (content.length - 1 )) * Math.PI;
-                    const radius = 2;
-    
-                    const x = radius * Math.cos(angle);
-                    const y = radius * Math.sin(angle);
+  useEffect(() => {
+    console.log(content);
+  }, [content]);
 
-                    return(
-                        <Weather 
-                            key={el.city + "weather"}
-                            position={[x, y-1.5, 0]}
-                            rotation-y={i + 1}
-                            cityName={el.city}
-                            weather={el.weatherData?.weather[0]?.main?.toLowerCase()}/>
-                    )
-                })}
-                </FocusWeather>
-            </Bounds>
-               
-        </>  
-    )
-}
+  return (
+    <>
+      <Lights />
+      <Earth />
+      <Clouds />
+      <Stars
+        radius={50}
+        depth={50}
+        count={10000}
+        factor={4}
+        saturation={0}
+        fade
+        speed={1}
+      />
+      <Bounds clip observe margin={0.7}>
+        <FocusWeather>
+          {content?.map((el, i) => {
+            const angle = (i / (content.length - 1)) * Math.PI;
+            const radius = 2;
 
-export default Scene;   
+            const x = radius * Math.cos(angle);
+            const y = radius * Math.sin(angle);
+
+            return (
+              <Weather
+                key={el.city + "weather"}
+                position={[x, y - 1.5, 0]}
+                rotation-y={i + 1}
+                cityName={el.city}
+                weather={el.weatherData?.weather[0]?.main?.toLowerCase()}
+              />
+            );
+          })}
+        </FocusWeather>
+      </Bounds>
+    </>
+  );
+};
+
+export default Scene;
