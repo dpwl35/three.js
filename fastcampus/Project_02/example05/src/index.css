@@ -1,37 +1,57 @@
-@import url('./reset.css');
+@import url("./reset.css");
 
-body, html, main, #root {
+body,
+html,
+main,
+#root {
   margin: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
 
-body{
-  background: radial-gradient(circle, rgb(83, 173, 241) 0%,
-   rgb(12, 73, 187) 100%);
+body {
+  background: radial-gradient(
+    circle,
+    rgb(83, 173, 241) 0%,
+    rgb(12, 73, 187) 100%
+  );
 }
 
+body.pointer {
+  cursor: pointer;
+}
 
-.rotation-icon{
+body.drag {
+  cursor: grab;
+}
+
+body.drag .rotation-icon {
+  opacity: 1;
+  transition: 0.3s ease-in-out;
+}
+
+.rotation-icon {
   width: 50px;
   height: 50px;
   border-radius: 50%;
   background: #fff;
+  opacity: 0;
+  transition: 0.3s ease-in-out;
   pointer-events: none;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.rotation-icon img{
+.rotation-icon img {
   display: block;
   object-fit: cover;
   width: 30px;
   height: 30px;
 }
 
-.cityName{
+.cityName {
   border-radius: 12px;
   padding: 5px 20px;
   background: rgb(0, 0, 0, 0.3);
@@ -40,8 +60,8 @@ body{
   font-size: 22px;
 }
 
-.cityName::after{
-  content: '';
+.cityName::after {
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -55,19 +75,29 @@ body{
   margin-bottom: -10px;
 }
 
-.left{
+.layout-detail {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 9999;
+  right: 0;
+  top: 0;
+  display: flex;
+}
+
+.left {
   width: 50%;
   height: 100%;
   clip-path: circle(61.4% at 0 51%);
 }
 
-.left>img{
+.left > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.right{
+.right {
   clip-path: circle(61.4% at 98% 50%);
   backdrop-filter: blur(15px);
   background: #000c7b84;
@@ -78,7 +108,7 @@ body{
   justify-content: flex-end;
 }
 
-.right .container{
+.right .container {
   padding: 10rem 2rem 0;
   display: flex;
   justify-content: flex-start;
@@ -86,7 +116,7 @@ body{
   flex-direction: column;
 }
 
-.x-btn{
+.x-btn {
   position: absolute;
   top: 2rem;
   right: 2rem;
@@ -99,32 +129,32 @@ body{
   cursor: pointer;
 }
 
-.x-btn::after{
-  content: '';
-  background: url('/public/icons/x-btn.svg') 50% 50% no-repeat;
+.x-btn::after {
+  content: "";
+  background: url("/public/icons/x-btn.svg") 50% 50% no-repeat;
   background-size: contain;
   width: 25px;
   height: 25px;
   display: block;
 }
 
-.temp{
-  background: url('/public/icons/thermometer.svg') 50% 50% no-repeat;
+.temp {
+  background: url("/public/icons/thermometer.svg") 50% 50% no-repeat;
   background-size: contain;
   width: 1rem;
   height: 1rem;
   display: inline-block;
 }
 
-.wind{
-  background: url('/public/icons/wind.svg') 50% 50% no-repeat;
+.wind {
+  background: url("/public/icons/wind.svg") 50% 50% no-repeat;
   background-size: contain;
   width: 1rem;
   height: 1rem;
   display: inline-block;
 }
 
-h1{
+h1 {
   font-size: max(1.6667vw, 32px);
   color: #fff;
   font-weight: 500;
@@ -132,7 +162,7 @@ h1{
   letter-spacing: 0.05em;
 }
 
-h2{
+h2 {
   display: block;
   margin-top: 0.5rem;
   font-size: max(1.4583vw, 28px);
@@ -141,11 +171,11 @@ h2{
   line-height: 135%;
 }
 
-.texts{
+.texts {
   margin-top: 1.2rem;
 }
 
-.texts p{
+.texts p {
   line-height: 135%;
   color: #fff;
   font-size: 22px;
