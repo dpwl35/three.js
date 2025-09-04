@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useBox } from "@react-three/cannon";
+import { useSphere } from "@react-three/cannon";
 
-export function Box(props) {
-  const [meshRef] = useBox(() => ({ args: [1, 1, 1], mass: 1, ...props }));
+export function Shpere(props) {
+  const [meshRef] = useSphere(() => ({ args: [1, 1, 1], mass: 1, ...props }));
 
   const [hovered, setHover] = useState(false);
 
@@ -13,7 +13,7 @@ export function Box(props) {
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}
     >
-      <boxGeometry args={[1, 1, 1]} />
+      <sphereGeometry args={[0.5]} />
       <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
     </mesh>
   );

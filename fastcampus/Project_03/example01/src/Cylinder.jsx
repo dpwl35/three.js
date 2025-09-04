@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { useBox } from "@react-three/cannon";
+import { useCylinder } from "@react-three/cannon";
 
-export function Box(props) {
-  const [meshRef] = useBox(() => ({ args: [1, 1, 1], mass: 1, ...props }));
+export function Cylinder(props) {
+  const [meshRef] = useCylinder(() => ({
+    args: [0.5, 0.5, 1, 8],
+    mass: 1,
+    ...props,
+  }));
 
   const [hovered, setHover] = useState(false);
 
@@ -13,7 +17,7 @@ export function Box(props) {
       onPointerOver={() => setHover(true)}
       onPointerOut={() => setHover(false)}
     >
-      <boxGeometry args={[1, 1, 1]} />
+      <cylinderGeometry args={[0.5, 0.5, 1, 8]} />
       <meshStandardMaterial color={hovered ? "hotpink" : "orange"} />
     </mesh>
   );
