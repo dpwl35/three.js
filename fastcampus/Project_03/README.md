@@ -54,3 +54,25 @@
 import { useControls } from “leva"
 const bgValue = useControls({ bgColor: '#fff', })
 ```
+
+## useComposundBody
+
+여러 개의 간단한 형태의 물체를 조합하여 하나의 복잡한 물체를 만들 수 있게 된다.  
+useTrimesh 나 useConvexPolyhedron은 각각의 도형에 대한 별도의 계산을 수행해야 합니다. 반면에 useCompoundBody를 사용하면 하나의 복합된 물체로 취급되므로 물리 엔진은 이를 최적화하여 전체적인 성능을 향상시킬 수 있습니다.
+
+또한 useTrimesh 나 useConvexPolyhedron 보다 충돌 감지가 더 효과적입니다.
+
+```javascript
+import { useCompoundBody } from “@react-three/cannon";
+const [ref, api] = useCompoundBody(
+ () => ({
+position,
+mass: 1,
+shapes: [
+ { args:[1,2,1], type: “Box” },
+ { args:[1],type: "Sphere"}
+ ],
+ }),
+ useRef(null)
+);
+```
