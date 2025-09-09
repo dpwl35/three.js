@@ -76,3 +76,53 @@ shapes: [
  useRef(null)
 );
 ```
+
+## useRaycastVehicle
+
+키보드를 통한 바퀴 제어 로직
+
+```javascript
+const [vehicle, vehicleApi] = useRaycastVehicle(
+  () => ({
+    chassisBody,
+    wheelInfos,
+    wheels,
+  }),
+  useRef(null)
+);
+vehicleApi.applyEngineForce(120, 2);
+vehicleApi.setSteeringValue(0, 1);
+vehicleApi.setBrake(0, 3);
+```
+
+## 물리엔진 Static, Kinematic, Dynamic
+
+- Static (정적)
+
+  - 움직이지 않으며 고정된 위치에 존재합니다.
+  - 주로 화면상에서 움직이지 않는 요소들에 사용됩니다. (예: 벽, 바닥 등) -물체는 물리 시뮬레이션에 참여하지만, 중력이나 다른 외력에 의해 움직이지 않습니다.
+
+Kinematic 사용법
+
+```javascript
+const [ref, api] = useBox(
+  () => ({
+    args: [1, 0.2, 1],
+    position,
+    mass: 1,
+    type: "Kinematic",
+  }),
+  useRef(null)
+);
+```
+
+- Kinematic (운동)
+
+  - 사용자가 직접 제어하거나 물리 시뮬레 이션에 의해 움직이지 않는 물체입니다.
+  - 주로 플레이어 캐릭터나 움직이는 플랫 폼과 같은 요소에 사용됩니다.
+  - 물리 시뮬레이션은 물체에 영향을 미치지 않고, 사용자(개발자)가 직접 위치와 속도를 조절할 수 있습니다
+
+- Dynamic (동적)
+  - 물리 시뮬레이션에 의해 영향을 받아움직이는 물체입니다.
+  - 주로 공, 상자 등
+  - 중력이나 다른 외력에 의해 영향을 받아 움직입니다.

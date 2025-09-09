@@ -4,6 +4,7 @@ import { useCompoundBody, useRaycastVehicle } from "@react-three/cannon";
 import { useRef } from "react";
 import useWheels from "./utils/useWheels";
 import DummyWheel from "./dummy/DummyWheel";
+import { useVehicleControls } from "./utils/useVehicleControls";
 
 const Car = () => {
   const chassisBodyValue = useControls("chassisBody", {
@@ -32,6 +33,7 @@ const Car = () => {
       //args: chassisBodyArgs,
       position,
       mass,
+      rotation: [0, Math.PI, 0],
       shapes: [
         { args: chassisBodyArgs, position: [0, 0, 0], type: "Box" },
         { args: [width, height, front], position: [0, height, 0], type: "Box" },
@@ -46,6 +48,8 @@ const Car = () => {
     wheelInfos,
     wheels,
   }));
+
+  useVehicleControls(vehicleApi, chassisApi);
 
   return (
     <group ref={vehicle}>
