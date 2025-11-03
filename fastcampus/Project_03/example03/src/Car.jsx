@@ -13,6 +13,7 @@ import { useFrame } from "@react-three/fiber";
 import useFollowCam from "./utils/useFollowCam";
 import { Vector3 } from "three";
 import { CarBody } from "./components/CarBody";
+import { Wheel } from "./components/Wheel";
 
 const Car = () => {
   const { pivot } = useFollowCam();
@@ -78,10 +79,10 @@ const Car = () => {
       <group ref={chassisBody}>
         <CarBody />
       </group>
-      <DummyWheel wheelRef={wheels[0]} radius={wheelRadius} />
-      <DummyWheel wheelRef={wheels[1]} radius={wheelRadius} />
-      <DummyWheel wheelRef={wheels[2]} radius={wheelRadius} />
-      <DummyWheel wheelRef={wheels[3]} radius={wheelRadius} />
+      <Wheel wheelRef={wheels[0]} radius={wheelRadius} leftSide={true} />
+      <Wheel wheelRef={wheels[1]} radius={wheelRadius} />
+      <Wheel wheelRef={wheels[2]} radius={wheelRadius} leftSide={true} />
+      <Wheel wheelRef={wheels[3]} radius={wheelRadius} />
     </group>
   );
 };
