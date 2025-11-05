@@ -5,6 +5,7 @@ import DummyBox from "./dummy/DummyBox";
 import DummyWall from "./dummy/DummyWall";
 import { Three } from "./components/Three";
 import { Ball } from "./components/Ball";
+import HowToPlay from "./components/HowToPlay";
 
 export function Ground(props) {
   const [meshRef] = usePlane(() => ({
@@ -39,6 +40,8 @@ export function Ground(props) {
       <DummyWall position={[0, 0.5, 5]} args={[10, 1, 1]} />
       <DummyWall position={[0, 0.5, -5]} args={[10, 1, 1]} />
       <DummyWall position={[-5, 0.5, 0]} args={[1, 1, 10]} />
+
+      <HowToPlay />
     </group>
   );
 }
