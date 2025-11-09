@@ -2,20 +2,23 @@ import { Canvas } from "@react-three/fiber";
 import { Ground } from "./Ground";
 import { Physics, Debug } from "@react-three/cannon";
 import Car from "./Car";
-import DummyBall from "./dummy/DummyBall";
-import DummyBox from "./dummy/DummyBox";
-import DummyWall from "./dummy/DummyWall";
+import { useRecoilValue } from "recoil";
+import { isStartScene } from "./utils/atom";
+import { useEffect } from "react";
 
 function Scene() {
-
+  const isStart = useRecoilValue(isStartScene);
+  useEffect(() => {
+    console.log(isStart);
+  }, [isStart]);
   return (
     <>
-      <Canvas camera={{ fov:45, position:[1.5, 2, 4]}}>
-        <ambientLight/>
+      <Canvas camera={{ fov: 45, position: [1.5, 2, 4] }}>
+        <ambientLight />
         <directionalLight position={[0, 5, 5]} />
         <Physics gravity={[0, -2.6, 0]}>
           <Debug>
-            <Car/>
+            {isStart && <Car />}
             <Ground />
           </Debug>
         </Physics>
