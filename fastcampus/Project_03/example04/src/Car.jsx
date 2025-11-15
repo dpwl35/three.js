@@ -1,12 +1,5 @@
-import {
-  useBox,
-  useCompoundBody,
-  useRaycastVehicle,
-} from "@react-three/cannon";
+import { useCompoundBody, useRaycastVehicle } from "@react-three/cannon";
 import { useMemo, useRef } from "react";
-import DummyCarBody from "./dummy/DummyCarBody";
-import DummyWheel from "./dummy/DummyWheel";
-import { useControls } from "leva";
 import { useWheels } from "./utils/useWheels";
 import { useVehicleControls } from "./utils/useVehicleControls";
 import { useFrame } from "@react-three/fiber";
