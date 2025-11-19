@@ -6,6 +6,7 @@ import { useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import { isStartScene } from "./utils/atom";
 import { Stats } from "@react-three/drei";
+import DrawCall from "./components/DrawCallCount";
 
 function Scene() {
   const isStart = useRecoilValue(isStartScene);
@@ -23,6 +24,7 @@ function Scene() {
             <Ground />
           </Debug>
         </Physics>
+        <DrawCall />
         <Stats showPanel={0} />
       </Canvas>
     </>
