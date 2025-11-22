@@ -1,5 +1,5 @@
 import { Canvas } from "@react-three/fiber";
-// import { OrbitControls } from "@react-three/drei";
+import { Box, OrbitControls } from "@react-three/drei";
 // import { RootMap } from "./maps/RootMap";
 // import { useRecoilValue } from "recoil";
 // import { CurrentMapAtom } from "../../../store/PlayersAtom";
@@ -20,6 +20,24 @@ export const MainCanvas = () => {
         far: 100000,
         position: [12, 12, 12],
       }}
-    ></Canvas>
+    >
+      <ambientLight name="ambientLight" intensity={5} />
+      <directionalLight
+        castShadow
+        intensity={5}
+        position={[0, 50, -50]}
+        shadow-normalBias={0.1}
+        shadow-camera-left={-25}
+        shadow-camera-right={25}
+        shadow-camera-top={25}
+        shadow-camera-bottom={-25}
+        shadow-camera-near={0.1}
+        shadow-camera-far={200}
+      />
+      <OrbitControls />
+      <Box>
+        <meshBasicMaterial color={0xffff00} />
+      </Box>
+    </Canvas>
   );
 };
