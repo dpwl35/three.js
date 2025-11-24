@@ -1,5 +1,7 @@
 import { Canvas } from "@react-three/fiber";
-import { Box, OrbitControls } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
+import { Player } from "./maps/player";
+import { RootMap } from "./maps/RootMap";
 // import { RootMap } from "./maps/RootMap";
 // import { useRecoilValue } from "recoil";
 // import { CurrentMapAtom } from "../../../store/PlayersAtom";
@@ -35,9 +37,8 @@ export const MainCanvas = () => {
         shadow-camera-far={200}
       />
       <OrbitControls />
-      <Box>
-        <meshBasicMaterial color={0xffff00} />
-      </Box>
+      <Player />
+      <RootMap />
     </Canvas>
   );
 };
