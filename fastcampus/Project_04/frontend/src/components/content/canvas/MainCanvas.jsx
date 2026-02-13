@@ -1,18 +1,14 @@
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import { Player } from "./maps/player";
-import { RootMap } from "./maps/RootMap";
-// import { RootMap } from "./maps/RootMap";
-// import { useRecoilValue } from "recoil";
-// import { CurrentMapAtom } from "../../../store/PlayersAtom";
-// import { Physics } from "@react-three/cannon";
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls } from '@react-three/drei';
+import { Player } from './maps/player';
+import { RootMap } from './maps/RootMap';
 
 export const MainCanvas = () => {
   const aspectRatio = window.innerWidth / window.innerHeight;
 
   return (
     <Canvas
-      id="canvas"
+      id='canvas'
       gl={{ antialias: true }}
       shadows
       camera={{
@@ -23,7 +19,7 @@ export const MainCanvas = () => {
         position: [12, 12, 12],
       }}
     >
-      <ambientLight name="ambientLight" intensity={5} />
+      <ambientLight name='ambientLight' intensity={5} />
       <directionalLight
         castShadow
         intensity={5}
