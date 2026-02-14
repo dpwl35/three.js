@@ -1,5 +1,12 @@
-import { GroundElements } from "./structures/ground";
+import React from 'react';
+import { GroundElements } from './structures/ground';
+import { useRecoilValue } from 'recoil';
+import { CharacterSelectFinishedAtom } from '../../../../store/PlayersAtom';
+import { CharacterInit } from '../../lobby/CharacterInit';
 
 export function RootMap() {
-  return <GroundElements />;
+  const characterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
+  return (
+    <>{!characterSelectFinished ? <CharacterInit /> : <GroundElements />}</>
+  );
 }

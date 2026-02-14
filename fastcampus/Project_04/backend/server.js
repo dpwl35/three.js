@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
 
   io.emit('players', players);
 
-  // 유저 정보
+  // Lobby에서 받은 유저 정보
   socket.on(
     'initialize',
     ({ tempNickname, tempJobPosition, selectedCharacterGlbNameIndex }) => {
@@ -33,12 +33,12 @@ io.on('connection', (socket) => {
           objects: [],
         },
       };
-      players.push(newPlayer);
+      players.push(newPlayer); //정보 저장
 
       socket.emit(
         'initialize',
         players.find((p) => p.id === socket.id),
-      );
+      ); // 방금 요청 보낸 사람과 id가 같은 플레이어 객체를 찾아 전송
 
       io.emit('enter', {
         id: socket.id,
