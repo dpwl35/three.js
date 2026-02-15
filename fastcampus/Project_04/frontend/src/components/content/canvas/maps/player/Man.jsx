@@ -7,18 +7,27 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useGLTF, useAnimations } from '@react-three/drei';
 import { SkeletonUtils } from 'three-stdlib';
 import { useGraph } from '@react-three/fiber';
+import { usePlayer } from './hooks/usePlayer';
 
-export function Man({ player, position }) {
-  const playerId = player?.id;
-
-  const memoizedPosition = useMemo(() => position, []);
-
-  const playerRef = useRef(null);
-
-  const { scene, materials, animations } = useGLTF(
-    `/models/CubeGuyCharacter.glb`,
+export function Man({ player, position, modelIndex }) {
+  const { playerRef, memoizedPosition, playerId, nodes, materials } = usePlayer(
+    {
+      player,
+      position,
+      modelIndex: modelIndex ?? player.selectedCharacterGlbNameIndex,
+    },
   );
-  const clone = useMemo(() => SkeletonUtils.clone(scene), []);
+
+  // const playerId = player?.id;
+
+  // const memoizedPosition = useMemo(() => position, []);
+
+  // const playerRef = useRef(null);
+
+  // const { scene, materials, animations } = useGLTF(
+  //   `/models/CubeGuyCharacter.glb`,
+  // );
+  //const clone = useMemo(() => SkeletonUtils.clone(scene), []);
   //같은 모델을 사용할수도 있기 같은 동작 방지 >  깊은 복사를 통해 분리
 
   // useEffect(() => {
@@ -26,21 +35,21 @@ export function Man({ player, position }) {
   //   console.log('animations:', animations);
   // }, [scene, animations]);
 
-  const objectMap = useGraph(clone);
-  const nodes = objectMap.nodes;
+  // const objectMap = useGraph(clone);
+  // const nodes = objectMap.nodes;
 
-  const [animation, setAnimation] = useState(
-    'CharacterArmature|CharacterArmature|CharacterArmature|Idle',
-  );
+  // const [animation, setAnimation] = useState(
+  //   'CharacterArmature|CharacterArmature|CharacterArmature|Idle',
+  // );
 
-  const { actions } = useAnimations(animations, playerRef);
+  // const { actions } = useAnimations(animations, playerRef);
 
-  useEffect(() => {
-    actions[animation]?.reset().fadeIn(0.5).play();
-    return () => {
-      actions[animation]?.fadeOut(0.5);
-    };
-  }, [actions, animation]);
+  // useEffect(() => {
+  //   actions[animation]?.reset().fadeIn(0.5).play();
+  //   return () => {
+  //     actions[animation]?.fadeOut(0.5);
+  //   };
+  // }, [actions, animation]);
 
   return (
     <group
