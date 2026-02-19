@@ -14,9 +14,7 @@ import { useThree } from '@react-three/fiber';
 import { Vector3 } from 'three';
 import { Line, OrbitControls } from '@react-three/drei';
 import gsap from 'gsap';
-import { Woman } from './player/Woman';
-import { Man } from './player/Man';
-import { Kid } from './player/Kid';
+import { Player } from './player/Player';
 
 export function RootMap() {
   const characterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
@@ -41,44 +39,27 @@ export function RootMap() {
           <GroundElements />
           {players.map((player) => {
             return (
-              <>
-                {player.selectedCharacterGlbNameIndex === 0 && (
-                  <Man
-                    player={player}
-                    position={
-                      new Vector3(
-                        player.position[0],
-                        player.position[1],
-                        player.position[2],
-                      )
-                    }
-                  />
-                )}
-                {player.selectedCharacterGlbNameIndex === 1 && (
-                  <Woman
-                    player={player}
-                    position={
-                      new Vector3(
-                        player.position[0],
-                        player.position[1],
-                        player.position[2],
-                      )
-                    }
-                  />
-                )}
-                {player.selectedCharacterGlbNameIndex === 2 && (
-                  <Kid
-                    player={player}
-                    position={
-                      new Vector3(
-                        player.position[0],
-                        player.position[1],
-                        player.position[2],
-                      )
-                    }
-                  />
-                )}
-              </>
+              <React.Fragment key={player.id}>
+                {/* <ChatBubble
+                  key={`${player.id}_chat`}
+                  player={player}
+                  chat={recentChats.find(
+                    (recentChat) => recentChat.senderId === player.id,
+                  )}
+                /> */}
+
+                <Player
+                  key={player.id}
+                  player={player}
+                  position={
+                    new Vector3(
+                      player.position[0],
+                      player.position[1],
+                      player.position[2],
+                    )
+                  }
+                />
+              </React.Fragment>
             );
           })}
         </>

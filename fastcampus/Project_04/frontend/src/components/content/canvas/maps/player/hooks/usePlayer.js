@@ -81,6 +81,15 @@ export const usePlayer = ({ player, position, modelIndex }) => {
       );
     }
 
+    if (nicknameRef.current) {
+      nicknameRef.current.position.set(
+        playerRef.current.position.x,
+        playerRef.current.position.y + 3.5,
+        playerRef.current.position.z,
+      );
+      nicknameRef.current.lookAt(10000, 10000, 10000);
+    }
+
     if (me?.id === playerId) {
       camera.position.set(
         playerRef.current.position.x + 12,
@@ -116,15 +125,6 @@ export const usePlayer = ({ player, position, modelIndex }) => {
   //     setAnimation(
   //       'CharacterArmature|CharacterArmature|CharacterArmature|Idle',
   //     );
-  //   }
-
-  //   if (nicknameRef.current) {
-  //     nicknameRef.current.position.set(
-  //       playerRef.current.position.x,
-  //       playerRef.current.position.y + 3.5,
-  //       playerRef.current.position.z,
-  //     );
-  //     nicknameRef.current.lookAt(10000, 10000, 10000);
   //   }
 
   //   if (chatBubbleBoard) {
@@ -173,7 +173,7 @@ export const usePlayer = ({ player, position, modelIndex }) => {
     playerId,
     nodes,
     materials,
-    // nicknameRef,
-    // setCurrentMyRoomPlayer,
+    nicknameRef,
+    setCurrentMyRoomPlayer,
   };
 };
