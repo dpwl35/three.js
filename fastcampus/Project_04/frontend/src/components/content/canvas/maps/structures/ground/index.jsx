@@ -7,6 +7,9 @@ import { Zombie } from './elements/npc/Zombie';
 import { PineTrees } from './elements/PineTrees';
 import { Swing } from './elements/Swing';
 import { Tree } from './elements/Tree';
+import { WoodChest } from './elements/WoodChest';
+import { Steak } from './elements/Steak';
+import { Cloud, Clouds } from '@react-three/drei';
 
 export const GroundElements = () => {
   return (
@@ -30,8 +33,34 @@ export const GroundElements = () => {
       <PineTrees position={[-20, 0, -20]} />
 
       <Key />
+      <WoodChest />
+      <Steak />
 
       <Swing />
+
+      <Clouds>
+        <Cloud
+          segments={100}
+          volume={5}
+          scale={2}
+          concentrate={'random'}
+          opacity={0.5}
+          fade={10}
+          speed={2}
+          position={[-20, 0, -20]}
+        />
+        <Cloud
+          segments={100}
+          volume={5}
+          scale={2}
+          concentrate={'random'}
+          opacity={0.5}
+          fade={10}
+          speed={2}
+          position={[20, 0, -20]}
+          color={'skyblue'}
+        />
+      </Clouds>
     </>
   );
 };

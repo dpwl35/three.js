@@ -47,9 +47,9 @@ export const Key = () => {
       />
       <primitive
         onClick={(e) => {
-          e.stopPropagation();
+          e.stopPropagation(); //이벤트 전파 막기
           alert('열쇠를 얻었습니다!');
-          setPlayerInventory((prev) => uniq([...prev, 'key']));
+          setPlayerInventory((prev) => uniq([...prev, 'key'])); //중복방지
         }}
         ref={ref}
         visible

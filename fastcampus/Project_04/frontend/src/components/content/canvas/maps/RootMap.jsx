@@ -18,6 +18,9 @@ import { Player } from './player/Player';
 
 export function RootMap() {
   const characterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
+  const playerGroundStructuresFloorPlaneCorners = useRecoilValue(
+    PlayerGroundStructuresFloorPlaneCornersSelector,
+  );
 
   const players = useRecoilValue(PlayersAtom);
   const camera = useThree((three) => three.camera);
@@ -47,7 +50,15 @@ export function RootMap() {
                     (recentChat) => recentChat.senderId === player.id,
                   )}
                 /> */}
-
+                {playerGroundStructuresFloorPlaneCorners?.map((corner) => {
+                  return (
+                    <Line
+                      key={corner.name}
+                      color='red'
+                      points={corner.corners.map((c) => [c.x, 0.01, c.z])}
+                    />
+                  );
+                })}
                 <Player
                   key={player.id}
                   player={player}
