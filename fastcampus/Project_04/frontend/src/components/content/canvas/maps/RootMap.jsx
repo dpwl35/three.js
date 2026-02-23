@@ -15,6 +15,7 @@ import { Vector3 } from 'three';
 import { Line, OrbitControls } from '@react-three/drei';
 import gsap from 'gsap';
 import { Player } from './player/Player';
+import { Loader } from '../../loader/Loader';
 
 export function RootMap() {
   const characterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
@@ -34,7 +35,7 @@ export function RootMap() {
   }, [camera.position]);
 
   return (
-    <>
+    <Suspense fallback={<Loader />}>
       {!characterSelectFinished ? (
         <CharacterInit />
       ) : (
@@ -75,6 +76,6 @@ export function RootMap() {
           })}
         </>
       )}
-    </>
+    </Suspense>
   );
 }
