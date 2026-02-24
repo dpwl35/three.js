@@ -7,12 +7,19 @@ import {
   MeAtom,
 } from '../../../store/PlayersAtom';
 import { SideBar } from './canvasUserInterfaces/common/SideBar';
+import { Minimap } from './canvasUserInterfaces/ground/Minimap';
 
 export const CanvasLayout = ({ children }) => {
   const [isLoadCompleted] = useRecoilState(IsLoadCompletedAtom);
   return (
     <Wrapper>
-      {children} {isLoadCompleted && <SideBar />}
+      {children}{' '}
+      {isLoadCompleted && (
+        <>
+          <SideBar />
+          <Minimap />
+        </>
+      )}
     </Wrapper>
   );
 };

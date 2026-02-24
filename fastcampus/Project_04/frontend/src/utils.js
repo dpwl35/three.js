@@ -3,6 +3,7 @@ export const isValidText = (text) => {
   return Boolean(text && text.trim() !== '');
 };
 
+//미니캡 위치
 export const calculateMinimapPosition = (originalPosition) => {
   return {
     x: 4 * originalPosition.x - 5,
@@ -10,6 +11,7 @@ export const calculateMinimapPosition = (originalPosition) => {
   };
 };
 
+//마우스 클릭 위치 → Three.js 좌표 변환
 export const calculateThreePosition = ({ clientX, clientY }) => {
   return {
     x: (clientX / window.innerWidth) * 2 - 1,

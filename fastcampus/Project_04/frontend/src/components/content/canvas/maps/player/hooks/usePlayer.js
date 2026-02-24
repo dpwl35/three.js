@@ -74,6 +74,13 @@ export const usePlayer = ({ player, position, modelIndex }) => {
       playerRef.current.position.sub(direction);
       playerRef.current.lookAt(position);
 
+      if (point) {
+        point.style.transform = `translate(
+          ${calculateMinimapPosition(playerRef.current.position).x}px,
+          ${calculateMinimapPosition(playerRef.current.position).y}px
+          )`;
+      }
+
       setAnimation('CharacterArmature|CharacterArmature|CharacterArmature|Run');
     } else {
       setAnimation(
@@ -131,13 +138,6 @@ export const usePlayer = ({ player, position, modelIndex }) => {
 
   //     playerRef.current.position.sub(direction);
   //     playerRef.current.lookAt(position);
-
-  //     if (point) {
-  //       point.style.transform = `translate(
-  //         ${calculateMinimapPosition(playerRef.current.position).x}px,
-  //         ${calculateMinimapPosition(playerRef.current.position).y}px
-  //         )`;
-  //     }
 
   //     setAnimation('CharacterArmature|CharacterArmature|CharacterArmature|Run');
   //   } else {
