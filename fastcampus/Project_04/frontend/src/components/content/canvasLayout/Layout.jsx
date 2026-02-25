@@ -8,9 +8,14 @@ import {
 } from '../../../store/PlayersAtom';
 import { SideBar } from './canvasUserInterfaces/common/SideBar';
 import { Minimap } from './canvasUserInterfaces/ground/Minimap';
+import { ChatArea } from './canvasUserInterfaces/common/ChatArea';
 
 export const CanvasLayout = ({ children }) => {
   const [isLoadCompleted] = useRecoilState(IsLoadCompletedAtom);
+  const currentMap = useRecoilValue(CurrentMapAtom);
+  const [currentMyRoomPlayer] = useRecoilState(CurrentMyRoomPlayerAtom);
+  const me = useRecoilValue(MeAtom);
+
   return (
     <Wrapper>
       {children}{' '}
@@ -18,6 +23,7 @@ export const CanvasLayout = ({ children }) => {
         <>
           <SideBar />
           <Minimap />
+          {currentMap !== 'MINI_GAME' && <ChatArea />}
         </>
       )}
     </Wrapper>

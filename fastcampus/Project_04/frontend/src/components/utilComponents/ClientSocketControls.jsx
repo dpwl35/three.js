@@ -1,11 +1,21 @@
 import { useEffect } from 'react';
 import { socket } from '../../sockets/clientSocket';
-import { useRecoilState } from 'recoil';
-import { MeAtom, PlayersAtom } from '../../store/PlayersAtom';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  AlreadyDisplayedRecentChatsAtom,
+  ChatsAtom,
+  CurrentMyRoomPlayerAtom,
+  EnteredPlayerNoticeAtom,
+  ExitedPlayerNoticeAtom,
+  MeAtom,
+  PlayersAtom,
+  RecentChatsAtom,
+} from '../../store/PlayersAtom';
 
 export const ClientSocketControls = () => {
   const [me, setMe] = useRecoilState(MeAtom);
   const [players, setPlayers] = useRecoilState(PlayersAtom);
+  const [chats, setChats] = useRecoilState(ChatsAtom);
 
   useEffect(() => {
     const handleConnect = () => {
@@ -43,8 +53,17 @@ export const ClientSocketControls = () => {
       console.info('플레이어 관련 이벤트');
     };
 
-    const handleNewText = () => {
-      console.info('새로운 텍스트');
+    const handleNewText = ({
+      senderId,
+      senderNickname,
+      senderJobPosition,
+      text,
+      timestamp,
+    }) => {
+      setChats((prev) => [
+        ...prev,
+        { senderId, senderNickname, senderJobPosition, text, timestamp },
+      ]);
     };
 
     socket.on('connect', handleConnect);
