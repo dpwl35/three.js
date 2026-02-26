@@ -9,6 +9,8 @@ import {
 import { SideBar } from './canvasUserInterfaces/common/SideBar';
 import { Minimap } from './canvasUserInterfaces/ground/Minimap';
 import { ChatArea } from './canvasUserInterfaces/common/ChatArea';
+import { Notice } from './canvasUserInterfaces/common/Notice';
+import { Footer } from './canvasUserInterfaces/common/Footer';
 
 export const CanvasLayout = ({ children }) => {
   const [isLoadCompleted] = useRecoilState(IsLoadCompletedAtom);
@@ -21,9 +23,11 @@ export const CanvasLayout = ({ children }) => {
       {children}{' '}
       {isLoadCompleted && (
         <>
+          <Notice />
           <SideBar />
           <Minimap />
           {currentMap !== 'MINI_GAME' && <ChatArea />}
+          <Footer />
         </>
       )}
     </Wrapper>

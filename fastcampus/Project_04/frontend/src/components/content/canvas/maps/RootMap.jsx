@@ -16,6 +16,7 @@ import { Line, OrbitControls } from '@react-three/drei';
 import gsap from 'gsap';
 import { Player } from './player/Player';
 import { Loader } from '../../loader/Loader';
+import { ChatBubble } from './structures/ground/3dUIs/ChatBubble';
 
 export function RootMap() {
   const characterSelectFinished = useRecoilValue(CharacterSelectFinishedAtom);
@@ -24,6 +25,7 @@ export function RootMap() {
   );
 
   const players = useRecoilValue(PlayersAtom);
+  const recentChats = useRecoilValue(RecentChatsAtom);
   const camera = useThree((three) => three.camera);
   const controls = useRef(null);
 
@@ -44,13 +46,13 @@ export function RootMap() {
           {players.map((player) => {
             return (
               <React.Fragment key={player.id}>
-                {/* <ChatBubble
+                <ChatBubble
                   key={`${player.id}_chat`}
                   player={player}
                   chat={recentChats.find(
                     (recentChat) => recentChat.senderId === player.id,
                   )}
-                /> */}
+                />
                 {playerGroundStructuresFloorPlaneCorners?.map((corner) => {
                   return (
                     <Line

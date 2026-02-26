@@ -97,6 +97,16 @@ export const usePlayer = ({ player, position, modelIndex }) => {
       nicknameRef.current.lookAt(10000, 10000, 10000);
     }
 
+    if (chatBubbleBoard) {
+      //말풍선 위치
+      chatBubbleBoard.position.set(
+        playerRef.current.position.x,
+        playerRef.current.position.y + 4,
+        playerRef.current.position.z,
+      );
+      chatBubbleBoard.lookAt(10000, 10000, 10000);
+    }
+
     if (me?.id === playerId) {
       camera.position.set(
         playerRef.current.position.x + 12,
@@ -144,15 +154,6 @@ export const usePlayer = ({ player, position, modelIndex }) => {
   //     setAnimation(
   //       'CharacterArmature|CharacterArmature|CharacterArmature|Idle',
   //     );
-  //   }
-
-  //   if (chatBubbleBoard) {
-  //     chatBubbleBoard.position.set(
-  //       playerRef.current.position.x,
-  //       playerRef.current.position.y + 4,
-  //       playerRef.current.position.z,
-  //     );
-  //     chatBubbleBoard.lookAt(10000, 10000, 10000);
   //   }
 
   //   if (me?.id === playerId) {
