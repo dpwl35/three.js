@@ -11,6 +11,7 @@ import { Minimap } from './canvasUserInterfaces/ground/Minimap';
 import { ChatArea } from './canvasUserInterfaces/common/ChatArea';
 import { Notice } from './canvasUserInterfaces/common/Notice';
 import { Footer } from './canvasUserInterfaces/common/Footer';
+import { Popup } from './canvasUserInterfaces/ground/Popup';
 
 export const CanvasLayout = ({ children }) => {
   const [isLoadCompleted] = useRecoilState(IsLoadCompletedAtom);
@@ -27,6 +28,13 @@ export const CanvasLayout = ({ children }) => {
           <SideBar />
           <Minimap />
           {currentMap !== 'MINI_GAME' && <ChatArea />}
+          {currentMap === 'GROUND' && (
+            <>
+              {currentMyRoomPlayer && me?.id !== currentMyRoomPlayer?.id && (
+                <Popup />
+              )}
+            </>
+          )}
           <Footer />
         </>
       )}
