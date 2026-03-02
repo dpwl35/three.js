@@ -9,7 +9,7 @@ import {
 import { MyRoomFloor } from './elements/MyRoomFloor';
 import { MyRoomLeftWall } from './elements/MyRoomLeftWall';
 import { MyRoomRightWall } from './elements/MyRoomRightWall';
-// import { MyRoomSkillPlaceMode } from "./placeMode/MyRoomSkillPlaceMode";
+import { MyRoomSkillPlaceMode } from './placeMode/MyRoomSkillPlaceMode';
 // import { MyRoomElements } from "./elements";
 // import { MyRoomFurniturePlaceMode } from "./placeMode/MyRoomFurniturePlaceMode";
 // import { MyRoomMemoPlaceMode } from "./placeMode/MyRoomMemoPlaceMode";
@@ -57,11 +57,11 @@ export const MyRoom = () => {
       <MyRoomLeftWall />
       <MyRoomRightWall />
       {/* 배치모드  */}
-      {/* {currentPlacingMyRoomSkill && (
+      {currentPlacingMyRoomSkill && (
         <MyRoomSkillPlaceMode
           currentPlacingMyRoomSkill={currentPlacingMyRoomSkill}
         />
-      )} */}
+      )}
       {/* {currentPlacingMyRoomFurniture && (
         <MyRoomFurniturePlaceMode
           currentPlacingMyRoomFurniture={currentPlacingMyRoomFurniture}
