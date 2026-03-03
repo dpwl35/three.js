@@ -25,6 +25,10 @@ export const ClientSocketControls = () => {
   const setEnterNotice = useSetRecoilState(EnteredPlayerNoticeAtom);
   const setExitNotice = useSetRecoilState(ExitedPlayerNoticeAtom);
 
+  const [currentMyRoomPlayer, setCurrentMyRoomPlayer] = useRecoilState(
+    CurrentMyRoomPlayerAtom,
+  );
+
   useEffect(() => {
     const handleConnect = () => {
       console.info('연결됨');
@@ -52,15 +56,15 @@ export const ClientSocketControls = () => {
       if (newMe) {
         setMe(newMe);
       }
-      // const currentMyRoomUpdated = value.find(
-      //   (p) => p && currentMyRoomPlayer && p?.id === currentMyRoomPlayer?.id,
-      // );
 
-      // if (currentMyRoomUpdated) {
-      //   setCurrentMyRoomPlayer(currentMyRoomUpdated);
-      // }
-
-      console.info('플레이어 관련 이벤트');
+      //console.info('플레이어 관련 이벤트');
+      const currentMyRoomUpdated = value.find(
+        (p) => p && currentMyRoomPlayer && p?.id === currentMyRoomPlayer?.id,
+      );
+      console.log('currentMyRoomUpdated', currentMyRoomUpdated);
+      if (currentMyRoomUpdated) {
+        setCurrentMyRoomPlayer(currentMyRoomUpdated);
+      }
     };
 
     const handleNewText = ({
@@ -111,6 +115,19 @@ export const ClientSocketControls = () => {
       socket.off('players', handlePlayers);
       socket.off('newText', handleNewText);
     };
-  }, [me, setMe, setPlayers, setChats, alreadyDisplayedRecentChats]);
+  }, [
+    alreadyDisplayedRecentChats,
+    chats,
+    currentMyRoomPlayer,
+    currentMyRoomPlayer?.id,
+    me,
+    me?.id,
+    setChats,
+    setCurrentMyRoomPlayer,
+    setEnterNotice,
+    setExitNotice,
+    setMe,
+    setPlayers,
+  ]);
   return null;
 };

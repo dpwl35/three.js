@@ -10,7 +10,7 @@ import { MyRoomFloor } from './elements/MyRoomFloor';
 import { MyRoomLeftWall } from './elements/MyRoomLeftWall';
 import { MyRoomRightWall } from './elements/MyRoomRightWall';
 import { MyRoomSkillPlaceMode } from './placeMode/MyRoomSkillPlaceMode';
-// import { MyRoomElements } from "./elements";
+import { MyRoomElements } from './elements';
 // import { MyRoomFurniturePlaceMode } from "./placeMode/MyRoomFurniturePlaceMode";
 // import { MyRoomMemoPlaceMode } from "./placeMode/MyRoomMemoPlaceMode";
 // import { MyRoomFurnitureRotationMode } from "./rotationMode/MyRoomFurnitureRotationMode";
