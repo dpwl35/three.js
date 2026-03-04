@@ -11,7 +11,7 @@ import { MyRoomLeftWall } from './elements/MyRoomLeftWall';
 import { MyRoomRightWall } from './elements/MyRoomRightWall';
 import { MyRoomSkillPlaceMode } from './placeMode/MyRoomSkillPlaceMode';
 import { MyRoomElements } from './elements';
-// import { MyRoomFurniturePlaceMode } from "./placeMode/MyRoomFurniturePlaceMode";
+import { MyRoomFurniturePlaceMode } from './placeMode/MyRoomFurniturePlaceMode';
 // import { MyRoomMemoPlaceMode } from "./placeMode/MyRoomMemoPlaceMode";
 // import { MyRoomFurnitureRotationMode } from "./rotationMode/MyRoomFurnitureRotationMode";
 
@@ -62,12 +62,12 @@ export const MyRoom = () => {
           currentPlacingMyRoomSkill={currentPlacingMyRoomSkill}
         />
       )}
-      {/* {currentPlacingMyRoomFurniture && (
+      {currentPlacingMyRoomFurniture && (
         <MyRoomFurniturePlaceMode
           currentPlacingMyRoomFurniture={currentPlacingMyRoomFurniture}
         />
       )}
-      {currentPlacingMyRoomMemo && <MyRoomMemoPlaceMode />} */}
+      {/*{currentPlacingMyRoomMemo && <MyRoomMemoPlaceMode />} */}
 
       {/* 변형모드 */}
       {/* {currentRotationingMyRoomObject && <MyRoomFurnitureRotationMode />} */}
