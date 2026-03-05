@@ -1,7 +1,7 @@
 import { useThree } from '@react-three/fiber';
 import { CurrentSelectedMyRoomObjectAtom } from '../../../../../../../store/PlayersAtom';
 import { MyRoomPlacedFurniture } from './MyRoomPlacedFurniture';
-//import { MyRoomPlacedMemo } from './MyRoomPlacedMemo';
+import { MyRoomPlacedMemo } from './MyRoomPlacedMemo';
 import { MyRoomPlacedSkillBox } from './MyRoomPlacedSkillBox';
 import { useRecoilState } from 'recoil';
 import { useEffect } from 'react';
@@ -45,19 +45,19 @@ export const MyRoomElements = ({ object }) => {
       />
     );
 
-  // if (object.name.includes('my-room-memo')) {
-  //   return (
-  //     <MyRoomPlacedMemo
-  //       key={object.name}
-  //       placedMyRoomMemo={{
-  //         authorNickname: object.authorNickname ?? '',
-  //         position: object.position,
-  //         rotation: object.rotation,
-  //         text: object.text ?? '',
-  //         timestamp: object.timestamp ?? '',
-  //       }}
-  //     />
-  //   );
-  // }
+  if (object.name.includes('my-room-memo')) {
+    return (
+      <MyRoomPlacedMemo
+        key={object.name}
+        placedMyRoomMemo={{
+          authorNickname: object.authorNickname ?? '',
+          position: object.position,
+          rotation: object.rotation,
+          text: object.text ?? '',
+          timestamp: object.timestamp ?? '',
+        }}
+      />
+    );
+  }
   return null;
 };
