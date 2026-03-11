@@ -26,9 +26,15 @@ export const MainCanvas = () => {
         <color attach='background' args={['beige']} />
       )}
 
-      <OrbitControls />
+      {/* <OrbitControls /> */}
 
-      <RootMap />
+      <Physics
+        gravity={[0, -20, 0]}
+        defaultContactMaterial={{ restitution: 0.1, friction: 0 }}
+        allowSleep
+      >
+        <RootMap />
+      </Physics>
     </Canvas>
   );
 };
